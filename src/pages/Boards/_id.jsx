@@ -4,7 +4,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import Container from '@mui/material/Container'
 import CssBaseline from '@mui/material/CssBaseline'
 import { teal } from '@mui/material/colors'
-import AppBar from '../../components/AppBar'
+import AppBar from '~/components/AppBar'
 import BoardBar from './BoardBar'
 import BoardContent from './BoardContent'
 
