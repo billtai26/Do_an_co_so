@@ -36,7 +36,7 @@ function Board() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container disableGutters maxWidth={false} sx={{ height: '100vh', bgcolor: 'background.default' }}>
+      <Container disableGutters maxWidth={false} sx={{height: '100vh', bgcolor: 'background.default' }}>
         <AppBar mode={mode} setMode={setMode} />
         <BoardBar />
         <BoardContent />

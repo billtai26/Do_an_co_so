@@ -10,15 +10,22 @@ import IconButton from '@mui/material/IconButton'
 import PersonAdd from '@mui/icons-material/PersonAdd'
 import Settings from '@mui/icons-material/Settings'
 import Logout from '@mui/icons-material/Logout'
+import { useNavigate } from 'react-router-dom'
 
 function Profiles() {
   const [anchorEl, setAnchorEl] = React.useState(null)
+  const navigate = useNavigate()
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const handleProfileClick = () => {
+    handleClose()
+    navigate('/profile')
   }
 
   return (
@@ -49,7 +56,7 @@ function Profiles() {
           'aria-labelledby': 'basic-button-profiles'
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleProfileClick}>
           <Avatar sx={{ width: 30, height: 30, mr: 2 }} /> Profile
         </MenuItem>
         <MenuItem onClick={handleClose}>
