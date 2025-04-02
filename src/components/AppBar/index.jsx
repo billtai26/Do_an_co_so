@@ -19,6 +19,7 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import IconButton from '@mui/material/IconButton'
 import { useState } from 'react'
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd'
 
 function AppBar({ mode, setMode }) {
   const [mobileMenuAnchor, setMobileMenuAnchor] = useState(null)
@@ -33,13 +34,14 @@ function AppBar({ mode, setMode }) {
   }
 
   return (
-    <Box px={2} sx={{
+    <Box sx={{
       width: '100%',
       height: (theme) => theme.trello.appBarHeight,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
       gap: 2,
+      paddingX: 2,
       overflowX: 'auto'
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -71,7 +73,7 @@ function AppBar({ mode, setMode }) {
           <Recent />
           <Starred />
           <Templates />
-          <Button variant="outlined">Create</Button>
+          <Button variant="outlined" startIcon={<LibraryAddIcon />}>Create</Button>
         </Box>
 
         <Menu
