@@ -40,9 +40,9 @@ function Profiles() {
           aria-expanded={open ? 'true' : undefined}
         >
           <Avatar 
-            sx={{ width: 32, height: 32 }}
+            sx={{ width: 34, height: 34 }}
             alt="Avatar"
-            src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-1/473448564_2069625416794085_8117495553887305624_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=1d2534&_nc_ohc=2JGRWAoeNbYQ7kNvgFS-gzp&_nc_oc=AdkwCcXRLLPcxBnV5_lQTNQTF3F3sVV7HKyT-J6I5Qpz7VIX3q3dVaKLTqJoKrvMhAc&_nc_zt=24&_nc_ht=scontent.fsgn2-7.fna&_nc_gid=IWWkwrZ_uSMfrvYrm1IxDw&oh=00_AYEMKwWcxWty9GjJecnmbAcrYv53kZbFsbh69Dcta-aWmg&oe=67F0A6E8"
+            src="http://bit.ly/3DPb1RW"
           />
         </IconButton>
       </Tooltip>
