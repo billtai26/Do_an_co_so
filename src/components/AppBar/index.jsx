@@ -47,6 +47,7 @@ function AppBar({ mode, setMode }) {
       gap: 2,
       paddingX: 2,
       overflowX: 'auto',
+      '&::-webkit-scrollbar-track': { m: 2 },
       bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#2c3e50' : '#1565c0')
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -98,6 +99,11 @@ function AppBar({ mode, setMode }) {
           onClose={handleMobileMenuClose}
           MenuListProps={{
             'aria-labelledby': 'mobile-menu-button'
+          }}
+          PaperProps={{
+            sx: {
+              bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#2c3e50' : '#1565c0')
+            }
           }}
         >
           <MenuItem onClick={handleMobileMenuClose}>

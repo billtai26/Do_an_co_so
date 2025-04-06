@@ -23,6 +23,7 @@ export const getTheme = (mode) => {
               width: '8px',
               height: '8px'
             },
+            '*::-webkit-scrollbar-track': { m: 2 },
             '*::-webkit-scrollbar-thumb': {
               backgroundColor: '#dcdde1',
               borderRadius: '8px'
