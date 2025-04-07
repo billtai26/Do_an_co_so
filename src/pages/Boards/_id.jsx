@@ -5,9 +5,9 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import Container from '@mui/material/Container'
 import CssBaseline from '@mui/material/CssBaseline'
 import { getTheme } from '~/theme' // Adjust the import path as needed
-import AppBar from '~/components/AppBar'
-import BoardBar from './BoardBar'
-import BoardContent from './BoardContent'
+import AppBar from '~/components/AppBar/AppBar'
+import BoardBar from './BoardBar/BoardBar'
+import BoardContent from './BoardContent/BoardContent'
 
 function Board() {
   const [mode, setMode] = useState(() => {
