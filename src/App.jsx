@@ -1,16 +1,13 @@
-import Board from '~/pages/Boards/_id.jsx'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import UserProfile from '~/components/UserProfile'
+import React from "react";
+import TaskManager from "./components/TaskManager";
 
-function App() {
+const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Board />} />
-        <Route path="/profile" element={<UserProfile />} />
-      </Routes>
-    </Router>
-  )
-}
+    <div>
+      <h1>Quản lý Task</h1>
+      <TaskManager />
+    </div>
+  );
+};
 
-export default App
+export default App;
