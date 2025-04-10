@@ -136,7 +136,7 @@ function AppBar({ mode, setMode }) {
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <TextField
           id="outlined-search"
-          label="Search..."
+          label=""
           type="text"
           size="small"
           value={searchValue}

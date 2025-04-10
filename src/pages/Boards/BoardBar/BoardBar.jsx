@@ -5,11 +5,14 @@ import VpnLockIcon from '@mui/icons-material/VpnLock'
 import AddToDriveIcon from '@mui/icons-material/AddToDrive'
 import BoltIcon from '@mui/icons-material/Bolt'
 import FilterListIcon from '@mui/icons-material/FilterList'
+import SortIcon from '@mui/icons-material/Sort'
 import Avatar from '@mui/material/Avatar'
 import AvatarGroup from '@mui/material/AvatarGroup'
-import { Tooltip } from '@mui/material'
+import { Tooltip, Menu, MenuItem, Divider } from '@mui/material'
 import Button from '@mui/material/Button'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import { useState } from 'react'
+import { capitalizeFirstLetter } from '~/utils/formatters'
 
 const MENU_STYLES = {
   color: 'white',
@@ -25,7 +28,29 @@ const MENU_STYLES = {
   }
 }
 
-function BoardBar() {
+function BoardBar({ board }) {
+  const [filterAnchorEl, setFilterAnchorEl] = useState(null)
+  const [sortAnchorEl, setSortAnchorEl] = useState(null)
+
+  const handleFilterClick = (event) => {
+    setFilterAnchorEl(event.currentTarget)
+  }
+
+  const handleFilterClose = () => {
+    setFilterAnchorEl(null)
+  }
+
+  const handleSortClick = (event) => {
+    setSortAnchorEl(event.currentTarget)
+  }
+
+  const handleSortClose = () => {
+    setSortAnchorEl(null)
+  }
+
+  const filterOpen = Boolean(filterAnchorEl)
+  const sortOpen = Boolean(sortAnchorEl)
+
   return (
     <Box sx={{
       width: '100%',
@@ -44,13 +69,13 @@ function BoardBar() {
         <Chip
           sx={MENU_STYLES}
           icon={<DashboardIcon />}
-          label="Anh Tai Dev Board"
+          label={board?.title}
           clickable
         />
         <Chip
           sx={MENU_STYLES}
           icon={<VpnLockIcon />}
-          label="Public/Private Workspace"
+          label={capitalizeFirstLetter(board?.type)}
           clickable
         />
         <Chip
@@ -70,7 +95,55 @@ function BoardBar() {
           icon={<FilterListIcon />}
           label="Filters"
           clickable
+          onClick={handleFilterClick}
         />
+        <Menu
+          anchorEl={filterAnchorEl}
+          open={filterOpen}
+          onClose={handleFilterClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left'
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left'
+          }}
+        >
+          <MenuItem onClick={handleFilterClose}>All Tasks</MenuItem>
+          <Divider />
+          <MenuItem onClick={handleFilterClose}>Todo</MenuItem>
+          <MenuItem onClick={handleFilterClose}>Doing</MenuItem>
+          <MenuItem onClick={handleFilterClose}>Done</MenuItem>
+        </Menu>
+        <Chip
+          sx={MENU_STYLES}
+          icon={<SortIcon />}
+          label="Sort"
+          clickable
+          onClick={handleSortClick}
+        />
+        <Menu
+          anchorEl={sortAnchorEl}
+          open={sortOpen}
+          onClose={handleSortClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+        >
+          <MenuItem onClick={handleSortClose}>Default</MenuItem>
+          <Divider />
+          <MenuItem onClick={handleSortClose}>By Deadline (Earliest)</MenuItem>
+          <MenuItem onClick={handleSortClose}>By Deadline (Latest)</MenuItem>
+          <Divider />
+          <MenuItem onClick={handleSortClose}>By Priority (Highest)</MenuItem>
+          <MenuItem onClick={handleSortClose}>By Priority (Lowest)</MenuItem>
+        </Menu>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         

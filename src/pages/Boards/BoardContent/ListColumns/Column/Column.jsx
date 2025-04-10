@@ -17,22 +17,28 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import AddCardIcon from '@mui/icons-material/AddCard'
 import DragHandleIcon from '@mui/icons-material/DragHandle'
 import ListCards from './ListCards/ListCards'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
+import { mapOrder } from '~/utils/sorts'
 
-function Column() {
+function Column({ sx, column }) {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => setAnchorEl(event.currentTarget)
   const handleClose = () => setAnchorEl(null)
+  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
 
   return (
     <Box sx={{
-      minWidth: '300px',
-      maxWidth: '300px',
+      minWidth: isMobile ? '94vw' : '300px',
+      maxWidth: isMobile ? '94vw' : '300px',
       bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : '#ebecf0'),
-      ml: 2,
       borderRadius: '6px',
       height: 'fit-content',
-      maxHeight: (theme) => `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`
+      maxHeight: (theme) => `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`,
+      ...sx
     }}>
       {/* Box Colum Header*/}
       <Box sx={{
@@ -47,7 +53,7 @@ function Column() {
           fontWeight: 'bold',
           cursor: 'pointer'
         }}>
-          Column Title
+          {column?.title}
         </Typography>
         <Box>
           <Tooltip title="More options">
@@ -99,7 +105,7 @@ function Column() {
       </Box>
 
       {/* List Cards */}
-      <ListCards />
+      <ListCards cards={orderedCards} />
 
       {/* Box Colum Footer*/}
       <Box sx={{
