@@ -8,6 +8,7 @@ import { getTheme } from '~/theme' // Adjust the import path as needed
 import AppBar from '~/components/AppBar/AppBar'
 import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
+import { mockData } from '~/apis/mock-data'
 
 function Board() {
   const [mode, setMode] = useState(() => {
@@ -25,8 +26,8 @@ function Board() {
       <CssBaseline />
       <Container disableGutters maxWidth={false} sx={{ height: '100vh', bgcolor: 'background.default' }}>
         <AppBar mode={mode} setMode={setMode} />
-        <BoardBar />
-        <BoardContent />
+        <BoardBar board={mockData?.board} />
+        <BoardContent board={mockData?.board} />
       </Container>
     </ThemeProvider>
   )
