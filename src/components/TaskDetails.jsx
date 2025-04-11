@@ -1,8 +1,8 @@
 import React from 'react'
-import { Box, Typography } from '@mui/material';
-import SubtaskChecklist from './SubtaskChecklist';
-import FileAttachment from './FileAttachment';
-import CommentsSection from './CommentsSection';
+import { Box, Typography } from '@mui/material'
+import SubtaskChecklist from './SubtaskChecklist'
+import FileAttachment from './FileAttachment'
+import CommentsSection from './CommentsSection'
 
 const TaskDetails = ({ task }) => {
   return (
@@ -22,4 +22,4 @@ const TaskDetails = ({ task }) => {
   );
 };
 
-export default TaskDetails;
+export default TaskDetails
