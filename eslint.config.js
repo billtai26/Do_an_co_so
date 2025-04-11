@@ -13,12 +13,12 @@ export default [
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
-        sourceType: 'module',
-      },
+        sourceType: 'module'
+      }
     },
     plugins: {
       'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
+      'react-refresh': reactRefresh
     },
     rules: {
       //React
@@ -55,6 +55,6 @@ export default [
       'comma-dangle': 1,
       'comma-spacing': 1,
       'arrow-spacing': 1
-    },
-  },
+    }
+  }
 ]

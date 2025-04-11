@@ -7,7 +7,7 @@ import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/s
 import { getTheme } from '~/theme' // Sửa thành import named export
 
 // Tạo theme mặc định (light mode)
-const defaultTheme = getTheme('light'); 
+const defaultTheme = getTheme('light')
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

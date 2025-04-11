@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, TextField, Button, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import React, { useState } from 'react'
+import { Box, TextField, Button, MenuItem, Select, FormControl, InputLabel } from '@mui/material'
 
 const TaskForm = ({ initialData = {}, onSave, onCancel }) => {
   const [formData, setFormData] = useState({
@@ -7,17 +7,17 @@ const TaskForm = ({ initialData = {}, onSave, onCancel }) => {
     description: initialData.description || '',
     deadline: initialData.deadline || '',
     priority: initialData.priority || 'Low',
-    status: initialData.status || 'Pending',
-  });
+    status: initialData.status || 'Pending'
+  })
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
 
   const handleSubmit = () => {
-    onSave(formData);
-  };
+    onSave(formData)
+  }
 
   return (
     <Box>
@@ -80,7 +80,7 @@ const TaskForm = ({ initialData = {}, onSave, onCancel }) => {
         </Button>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default TaskForm;
+export default TaskForm
