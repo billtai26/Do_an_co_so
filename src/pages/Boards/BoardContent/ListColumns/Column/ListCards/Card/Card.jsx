@@ -7,7 +7,7 @@ import CommentIcon from '@mui/icons-material/Comment'
 import AttachmentIcon from '@mui/icons-material/Attachment'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import { useState } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import TaskModal from '~/components/TaskModal/TaskModal'
 import Chip from '@mui/material/Chip'
 import Box from '@mui/material/Box'
@@ -18,8 +18,14 @@ import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
-function Card({ card }) {
+function Card({ card: initialCard, updateCard }) {
+  const [card, setCard] = useState(initialCard)
   const [modalOpen, setModalOpen] = useState(false)
+  
+  // Add effect to update card when initialCard changes
+  useEffect(() => {
+    setCard(initialCard)
+  }, [initialCard])
   
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: card._id,
@@ -48,6 +54,15 @@ function Card({ card }) {
     }
   }
 
+  const handleTaskUpdate = useCallback((updatedTask) => {
+    setCard(updatedTask)
+    
+    // If there's a parent update handler, call it
+    if (updateCard) {
+      updateCard(updatedTask)
+    }
+  }, [updateCard])
+
   const formatDate = (dateString) => {
     if (!dateString) return ''
     const date = new Date(dateString)
@@ -56,10 +71,10 @@ function Card({ card }) {
 
   const getPriorityColor = (priority) => {
     switch(priority) {
-    case 'high': return 'error'
-    case 'medium': return 'warning'
-    case 'low': return 'info'
-    default: return 'default'
+      case 'high': return 'error'
+      case 'medium': return 'warning'
+      case 'low': return 'info'
+      default: return 'default'
     }
   }
 
@@ -151,6 +166,7 @@ function Card({ card }) {
         open={modalOpen} 
         onClose={() => setModalOpen(false)} 
         task={card}
+        onTaskUpdate={handleTaskUpdate}
       />
     </>
   )
