@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -23,7 +23,7 @@ import { mapOrder } from '~/utils/sorts'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
-function Column({ sx, column }) {
+function Column({ sx, column, onColumnUpdate }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: column._id,
     data: { ...column }
@@ -45,6 +45,18 @@ function Column({ sx, column }) {
   const handleClose = () => setAnchorEl(null)
 
   const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+
+  const handleCardsChange = useCallback((newCards) => {
+    if (onColumnUpdate) {
+      // Create a new column object with updated cards
+      const newColumn = {
+        ...column,
+        cards: newCards,
+        cardOrderIds: newCards.map(card => card._id)
+      }
+      onColumnUpdate(newColumn)
+    }
+  }, [column, onColumnUpdate])
 
   return (
     <div ref={setNodeRef} style={dndKitColumnStyles} {...attributes}>
@@ -126,7 +138,7 @@ function Column({ sx, column }) {
         </Box>
 
         {/* List Cards */}
-        <ListCards cards={orderedCards} />
+        <ListCards cards={orderedCards} onCardsChange={handleCardsChange} />
 
         {/* Box Colum Footer*/}
         <Box sx={{

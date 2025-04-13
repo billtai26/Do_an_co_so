@@ -45,7 +45,7 @@ const TabPanel = ({ children, value, index, ...other }) => {
   )
 }
 
-function TaskModal({ open, onClose, task }) {
+function TaskModal({ open, onClose, task, onTaskUpdate }) {
   const [tabValue, setTabValue] = useState(0)
   const [editedTitle, setEditedTitle] = useState('')
   const [editedDescription, setEditedDescription] = useState('')
@@ -92,19 +92,46 @@ function TaskModal({ open, onClose, task }) {
 
   const handleAddSubtask = () => {
     if (newSubtask.trim()) {
-      setSubtasks([...subtasks, { id: `subtask-${Date.now()}`, text: newSubtask, completed: false }])
+      const updatedSubtasks = [...subtasks, { id: `subtask-${Date.now()}`, text: newSubtask, completed: false }];
+      setSubtasks(updatedSubtasks)
       setNewSubtask('')
+      
+      // Notify parent component of the update
+      if (onTaskUpdate) {
+        onTaskUpdate({
+          ...task,
+          subtasks: updatedSubtasks
+        });
+      }
     }
   }
 
   const handleSubtaskToggle = (subtaskId) => {
-    setSubtasks(subtasks.map(subtask => 
+    const updatedSubtasks = subtasks.map(subtask => 
       subtask.id === subtaskId ? { ...subtask, completed: !subtask.completed } : subtask
-    ))
+    );
+    setSubtasks(updatedSubtasks);
+    
+    // Notify parent component of the update
+    if (onTaskUpdate) {
+      onTaskUpdate({
+        ...task,
+        subtasks: updatedSubtasks
+      });
+    }
   }
 
   const handleDeleteSubtask = (subtaskId) => {
-    setSubtasks(subtasks.filter(subtask => subtask.id !== subtaskId))
+    const updatedSubtasks = subtasks.filter(subtask => subtask.id !== subtaskId);
+    setSubtasks(updatedSubtasks);
+    
+    // Notify parent component of the update
+    if (onTaskUpdate) {
+      onTaskUpdate({
+        ...task,
+        subtasks: updatedSubtasks
+      });
+    }
   }
 
   const handleAddComment = () => {
@@ -115,9 +142,36 @@ function TaskModal({ open, onClose, task }) {
         text: newComment,
         timestamp: new Date().toISOString()
       }
-      setComments([...comments, newCommentObj])
+      const updatedComments = [...comments, newCommentObj];
+      setComments(updatedComments)
       setNewComment('')
+      
+      // Notify parent component of the update
+      if (onTaskUpdate) {
+        onTaskUpdate({
+          ...task,
+          comments: updatedComments
+        });
+      }
     }
+  }
+  
+  const handleSaveChanges = () => {
+    // Create updated task with all changes
+    const updatedTask = {
+      ...task,
+      title: editedTitle,
+      description: editedDescription,
+      subtasks: subtasks,
+      comments: comments
+    };
+    
+    // Notify parent component of all updates
+    if (onTaskUpdate) {
+      onTaskUpdate(updatedTask);
+    }
+    
+    onClose();
   }
 
   return (
@@ -312,10 +366,7 @@ function TaskModal({ open, onClose, task }) {
           </Button>
           <Button 
             variant="contained" 
-            onClick={() => {
-              // Handle save here
-              onClose()
-            }}
+            onClick={handleSaveChanges}
           >
             Save Changes
           </Button>
