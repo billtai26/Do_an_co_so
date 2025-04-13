@@ -8,11 +8,18 @@ import FilterListIcon from '@mui/icons-material/FilterList'
 import SortIcon from '@mui/icons-material/Sort'
 import Avatar from '@mui/material/Avatar'
 import AvatarGroup from '@mui/material/AvatarGroup'
-import { Tooltip, Menu, MenuItem, Divider } from '@mui/material'
+import { Tooltip, Menu, MenuItem, Divider, ListItemIcon, ListItemText } from '@mui/material'
 import Button from '@mui/material/Button'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import { useState } from 'react'
 import { capitalizeFirstLetter } from '~/utils/formatters'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh'
+import DateRangeIcon from '@mui/icons-material/DateRange'
+import LowPriorityIcon from '@mui/icons-material/LowPriority'
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
 
 const MENU_STYLES = {
   color: 'white',
@@ -28,9 +35,11 @@ const MENU_STYLES = {
   }
 }
 
-function BoardBar({ board }) {
+function BoardBar({ board, onSortChange, onFilterChange }) {
   const [filterAnchorEl, setFilterAnchorEl] = useState(null)
   const [sortAnchorEl, setSortAnchorEl] = useState(null)
+  const [activeSort, setActiveSort] = useState('default')
+  const [activeFilter, setActiveFilter] = useState('all')
 
   const handleFilterClick = (event) => {
     setFilterAnchorEl(event.currentTarget)
@@ -46,6 +55,24 @@ function BoardBar({ board }) {
 
   const handleSortClose = () => {
     setSortAnchorEl(null)
+  }
+
+  const handleSortSelect = (sortType) => {
+    setActiveSort(sortType)
+    if (onSortChange) onSortChange(sortType)
+    handleSortClose()
+  }
+
+  const handleFilterSelect = (filterType) => {
+    setActiveFilter(filterType)
+    if (onFilterChange) {
+      if (filterType === 'all') {
+        onFilterChange([])
+      } else {
+        onFilterChange([filterType])
+      }
+    }
+    handleFilterClose()
   }
 
   const filterOpen = Boolean(filterAnchorEl)
@@ -91,7 +118,10 @@ function BoardBar({ board }) {
           clickable
         />
         <Chip
-          sx={MENU_STYLES}
+          sx={{
+            ...MENU_STYLES,
+            bgcolor: activeFilter !== 'all' ? 'primary.100' : 'transparent'
+          }}
           icon={<FilterListIcon />}
           label="Filters"
           clickable
@@ -110,14 +140,77 @@ function BoardBar({ board }) {
             horizontal: 'left'
           }}
         >
-          <MenuItem onClick={handleFilterClose}>All Tasks</MenuItem>
+          <MenuItem 
+            onClick={() => handleFilterSelect('all')} 
+            selected={activeFilter === 'all'}
+          >
+            <ListItemIcon>
+              <FormatListBulletedIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>All Tasks</ListItemText>
+          </MenuItem>
           <Divider />
-          <MenuItem onClick={handleFilterClose}>Todo</MenuItem>
-          <MenuItem onClick={handleFilterClose}>Doing</MenuItem>
-          <MenuItem onClick={handleFilterClose}>Done</MenuItem>
+          <MenuItem 
+            onClick={() => handleFilterSelect('todo')} 
+            selected={activeFilter === 'todo'}
+          >
+            <ListItemIcon>
+              <CheckCircleOutlineIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Todo</ListItemText>
+          </MenuItem>
+          <MenuItem 
+            onClick={() => handleFilterSelect('doing')} 
+            selected={activeFilter === 'doing'}
+          >
+            <ListItemIcon>
+              <PlayCircleOutlineIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Doing</ListItemText>
+          </MenuItem>
+          <MenuItem 
+            onClick={() => handleFilterSelect('done')} 
+            selected={activeFilter === 'done'}
+          >
+            <ListItemIcon>
+              <CheckCircleOutlineIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Done</ListItemText>
+          </MenuItem>
+          <Divider />
+          <MenuItem 
+            onClick={() => handleFilterSelect('high-priority')} 
+            selected={activeFilter === 'high-priority'}
+          >
+            <ListItemIcon>
+              <PriorityHighIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>High Priority</ListItemText>
+          </MenuItem>
+          <MenuItem 
+            onClick={() => handleFilterSelect('medium-priority')} 
+            selected={activeFilter === 'medium-priority'}
+          >
+            <ListItemIcon>
+              <PriorityHighIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Medium Priority</ListItemText>
+          </MenuItem>
+          <MenuItem 
+            onClick={() => handleFilterSelect('low-priority')} 
+            selected={activeFilter === 'low-priority'}
+          >
+            <ListItemIcon>
+              <LowPriorityIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Low Priority</ListItemText>
+          </MenuItem>
         </Menu>
         <Chip
-          sx={MENU_STYLES}
+          sx={{
+            ...MENU_STYLES,
+            bgcolor: activeSort !== 'default' ? 'primary.100' : 'transparent'
+          }}
           icon={<SortIcon />}
           label="Sort"
           clickable
@@ -136,13 +229,53 @@ function BoardBar({ board }) {
             horizontal: 'left',
           }}
         >
-          <MenuItem onClick={handleSortClose}>Default</MenuItem>
+          <MenuItem 
+            onClick={() => handleSortSelect('default')}
+            selected={activeSort === 'default'}
+          >
+            <ListItemIcon>
+              <FormatListBulletedIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Default</ListItemText>
+          </MenuItem>
           <Divider />
-          <MenuItem onClick={handleSortClose}>By Deadline (Earliest)</MenuItem>
-          <MenuItem onClick={handleSortClose}>By Deadline (Latest)</MenuItem>
+          <MenuItem 
+            onClick={() => handleSortSelect('deadline-asc')}
+            selected={activeSort === 'deadline-asc'}
+          >
+            <ListItemIcon>
+              <AccessTimeIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>By Deadline (Earliest)</ListItemText>
+          </MenuItem>
+          <MenuItem 
+            onClick={() => handleSortSelect('deadline-desc')}
+            selected={activeSort === 'deadline-desc'}
+          >
+            <ListItemIcon>
+              <DateRangeIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>By Deadline (Latest)</ListItemText>
+          </MenuItem>
           <Divider />
-          <MenuItem onClick={handleSortClose}>By Priority (Highest)</MenuItem>
-          <MenuItem onClick={handleSortClose}>By Priority (Lowest)</MenuItem>
+          <MenuItem 
+            onClick={() => handleSortSelect('priority-desc')}
+            selected={activeSort === 'priority-desc'}
+          >
+            <ListItemIcon>
+              <PriorityHighIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>By Priority (Highest)</ListItemText>
+          </MenuItem>
+          <MenuItem 
+            onClick={() => handleSortSelect('priority-asc')}
+            selected={activeSort === 'priority-asc'}
+          >
+            <ListItemIcon>
+              <LowPriorityIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>By Priority (Lowest)</ListItemText>
+          </MenuItem>
         </Menu>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
