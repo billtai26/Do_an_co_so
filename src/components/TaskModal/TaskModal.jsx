@@ -357,20 +357,6 @@ function TaskModal({ open, onClose, task, onTaskUpdate }) {
             </Typography>
           )}
         </TabPanel>
-
-        <Divider sx={{ my: 3 }} />
-        
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
-          <Button variant="outlined" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button 
-            variant="contained" 
-            onClick={handleSaveChanges}
-          >
-            Save Changes
-          </Button>
-        </Box>
       </Box>
     </Modal>
   )
