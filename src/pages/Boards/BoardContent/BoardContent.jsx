@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Box from '@mui/material/Box'
 import ListColumns from './ListColumns/ListColumns'
 import { mapOrder } from '~/utils/sorts'
@@ -295,7 +296,7 @@ function BoardContent({ board }) {
     // const intersections = !!pointerIntersections?.length
     //   ? pointerIntersections
     //   : rectIntersection(args)
-    
+
     // Tìm overId đầu tiên trong đám pointerIntersections ở trên
     let overId = getFirstCollision(pointerIntersections, 'id')
     if (overId) {
@@ -306,7 +307,7 @@ function BoardContent({ board }) {
         overId = closestCorners({
           ...args,
           droppableContainers: args.droppableContainers.filter(container => {
-            return (container.id !== overId) && (checkColumn?.cardOrderIds?.includes(container.id)) 
+            return (container.id !== overId) && (checkColumn?.cardOrderIds?.includes(container.id))
           })
         })[0]?.id
         // console.log('overId after: ', overId)
