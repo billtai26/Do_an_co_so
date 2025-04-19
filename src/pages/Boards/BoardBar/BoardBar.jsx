@@ -222,14 +222,14 @@ function BoardBar({ board, onSortChange, onFilterChange }) {
           onClose={handleSortClose}
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: 'left',
+            horizontal: 'left'
           }}
           transformOrigin={{
             vertical: 'top',
-            horizontal: 'left',
+            horizontal: 'left'
           }}
         >
-          <MenuItem 
+          <MenuItem
             onClick={() => handleSortSelect('default')}
             selected={activeSort === 'default'}
           >
@@ -279,9 +279,9 @@ function BoardBar({ board, onSortChange, onFilterChange }) {
         </Menu>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        
+
         <Button
-          variant="outlined" 
+          variant="outlined"
           startIcon={<PersonAddIcon />}
           sx={{
             color: 'white',
@@ -312,50 +312,49 @@ function BoardBar({ board, onSortChange, onFilterChange }) {
           </Tooltip>
           <Tooltip title="anhtaidev">
             <Avatar alt="Anh Tai dep trai"
-              src="https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/461432459_2606978432821588_3454035682558945814_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=ap9zXCqrxF8Q7kNvgGNcM6H&_nc_oc=AdnvYbfHqaDTGmrFouDXSL6D_ows2KO1TNxg_Kav4d9o3KHj3IIeCxzLuaPewkTyNYo&_nc_zt=23&_nc_ht=scontent.fsgn2-5.fna&_nc_gid=iScz0G1NbcEEyaZQQR9uAA&oh=00_AYFzGRW20ef0bP_mMsbSHQvT_0BrLYNlcLLy8aCzNr8IsA&oe=67F325B9" />
+              src="https://scontent.fsgn2-6.fna.fbcdn.net/v/t39.30808-6/461432459_2606978432821588_3454035682558945814_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=QyyCPxvLV2MQ7kNvwHAnVO4&_nc_oc=AdnYjxzPkgnOy1P4PYAQSPwMqJ8m4jebbWDGR-NXI3yrhVdU7YuXU70hSs0-H5iIJVs&_nc_zt=23&_nc_ht=scontent.fsgn2-6.fna&_nc_gid=HdATcakR20Sm8dzL_vvGAA&oh=00_AfGoxQf6oApjWOKFnMWqp0rzDTqNQ7_vpJfAU2gQ8jkxbQ&oe=68091EB9" />
           </Tooltip>
           <Tooltip title="anhtaidev">
             <Avatar alt="Anh Tai dep trai"
-              src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t1.6435-9/151184088_3824016630985908_1609593348639139959_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=qoW6V9vI3VwQ7kNvgF_Hm5G&_nc_oc=Adk52ESJxZPIz2NPX1cxnyAm4xXIBqc3q_aJmg3xKUFVM1tqCvxwwY6rLgz83pyR_PM&_nc_zt=23&_nc_ht=scontent.fsgn2-7.fna&_nc_gid=_YdzWKyebDtClJmUrCfvxA&oh=00_AYEQM9BY1kQhdrwZrYbBq4IE-qPskzXGHAy2-gKK88HalA&oe=6814D2DD" />
+              src="https://scontent.fsgn2-9.fna.fbcdn.net/v/t39.30808-6/481993368_3076417225848625_1391952600017220461_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=RWQAvQ7OGMAQ7kNvwHtw6_I&_nc_oc=AdmTGuwQ_DNQkRZNS5gUyExtiDEuuiiuPglwOihrahTrMqiqf_TDXLUc4oLpQwiLgkI&_nc_zt=23&_nc_ht=scontent.fsgn2-9.fna&_nc_gid=rOUwaM3ep--al4ZcQx_9pA&oh=00_AfHNVmny8aX7P0DqHMBTXcAi5zugQIp48uP9iuLbrfQkyw&oe=6808F1A9" />
           </Tooltip>
           <Tooltip title="anhtaidev">
             <Avatar alt="Anh Tai dep trai"
-              src="https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/481993368_3076417225848625_1391952600017220461_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=EZ_jBNvmfoYQ7kNvgENmFkp&_nc_oc=AdnGtpAs58e6EW5nHZgyNBgoVbkH0lxnT9oX-6isNRbXocwBl4PHI_GAc9036jQfQr4&_nc_zt=23&_nc_ht=scontent.fsgn2-5.fna&_nc_gid=n8SnLVDKHi8acSX_d3KN6A&oh=00_AYHy1u44ZRGRPHv1po5vsPT5WV1iFjwQfpQdiGfEPzgMgw&oe=67F330E9" />
+              src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t1.6435-9/151184088_3824016630985908_1609593348639139959_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=sjJ_Vk6599UQ7kNvwHD9zl9&_nc_oc=AdnWrCbe8948iW8NrgbsbP3zwJf5b3zubiqMfzsH5bc8D7ltgLQ8bLhPeVR-Yhp3j3g&_nc_zt=23&_nc_ht=scontent.fsgn2-7.fna&_nc_gid=Tr-LXmke6M-OexzDsEYoJg&oh=00_AfH4EjHDtO53myHLIXcPCLqHqh4u82DJNubiBFaURem_zQ&oe=682A939D" />
           </Tooltip>
           <Tooltip title="anhtaidev">
             <Avatar alt="Anh Tai dep trai"
-              src="https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/448083977_2183122202023574_407376023877496326_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=qmf3C46FpxAQ7kNvgF3OzBI&_nc_oc=AdmLFPfBYXDo4D1bRVdqMvU5MMKFl_exNU9EwU1R2drG9un6N2i5aKZkRmqMyp9auuw&_nc_zt=23&_nc_ht=scontent.fsgn2-5.fna&_nc_gid=Rt0KciQeYRk18F2_SaDcgQ&oh=00_AYGflJuxd3lC0fKarO2JxO_qHgCsksx4xONxFIpZDZ-7Ww&oe=67F32308" />
+              src="https://scontent.fsgn2-10.fna.fbcdn.net/v/t39.30808-6/448083977_2183122202023574_407376023877496326_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=1rDiMWInvVMQ7kNvwEzscFI&_nc_oc=AdnmM9AEvvUecCad0khT1UV1avI7GnvDVCfcY8zoCbTXNn27vyMk1T20xlOJ1UjW6tI&_nc_zt=23&_nc_ht=scontent.fsgn2-10.fna&_nc_gid=adnmnVuworKVAzv8-LerjQ&oh=00_AfHQ-fIy-qvk2snGToHIdVtmMpkld99IcLD1HRv5mGixlA&oe=68091C08" />
           </Tooltip>
           <Tooltip title="anhtaidev">
             <Avatar alt="Anh Tai dep trai"
-              src="https://scontent.fsgn2-6.fna.fbcdn.net/v/t39.30808-6/239462814_2349880831812471_7302002402268342362_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=9yYZpTrsLr8Q7kNvgHJIV3Q&_nc_oc=AdlD04DEPzLiDJUXPZ2f1S7uSaYhL6HwoM7rwDJMNQEDn0UNZnKWQnserZk9M1qU5uE&_nc_zt=23&_nc_ht=scontent.fsgn2-6.fna&_nc_gid=_olA1okMbkEJR9s__r4vSg&oh=00_AYHycJp235urpi_-Jsjge_oNjYSnjG1HUECZoujrnXpnXw&oe=67F30D4B" />
+              src="https://scontent.fsgn2-6.fna.fbcdn.net/v/t39.30808-6/239462814_2349880831812471_7302002402268342362_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=e3cuAfkehIQQ7kNvwH0IJuY&_nc_oc=Adkbzv862Dksl7HXqOAosseLxLz_iTsMCzbSVB8lmvFSZBLAY7VPohKVhWtIkv5O7yI&_nc_zt=23&_nc_ht=scontent.fsgn2-6.fna&_nc_gid=jIsiQJttScuMHzXKT-_ehQ&oh=00_AfEpZJNxX3STBAyiXAkbAU1IZeqTfcKO5zJZk0MJx1AfPA&oe=6809064B" />
           </Tooltip>
 
           <Tooltip title="anhtaidev">
             <Avatar alt="Anh Tai dep trai"
-              src="http://bit.ly/3DPb1RW" />
+              src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-1/473448564_2069625416794085_8117495553887305624_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=e99d92&_nc_ohc=Mpt-3OUltsQQ7kNvwF84bA7&_nc_oc=AdlI8LY6iVOalVWap5LobSnSfXBfz9zFRLYRaCFMcBxyj-vpbkUgW2hv2qUqYnsDJPY&_nc_zt=24&_nc_ht=scontent.fsgn2-7.fna&_nc_gid=6ap2TfTY3lGQ0NnyhzwErA&oh=00_AfFXd7tpIuEDrc7dq1IlGNUQlzMhgETmewr7w-ChyA6B0Q&oe=67F7E728" />
           </Tooltip>
           <Tooltip title="anhtaidev">
             <Avatar alt="Anh Tai dep trai"
-              src="https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/461432459_2606978432821588_3454035682558945814_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=ap9zXCqrxF8Q7kNvgGNcM6H&_nc_oc=AdnvYbfHqaDTGmrFouDXSL6D_ows2KO1TNxg_Kav4d9o3KHj3IIeCxzLuaPewkTyNYo&_nc_zt=23&_nc_ht=scontent.fsgn2-5.fna&_nc_gid=iScz0G1NbcEEyaZQQR9uAA&oh=00_AYFzGRW20ef0bP_mMsbSHQvT_0BrLYNlcLLy8aCzNr8IsA&oe=67F325B9" />
+              src="https://scontent.fsgn2-6.fna.fbcdn.net/v/t39.30808-6/457561003_540150391881880_1395814564666247754_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=p9E6boRiiNQQ7kNvwFQi8Kr&_nc_oc=Adnifz-gBh3V1fqEgZdzKU0cfHUEzZDSGIlmBFuzu3iIkXi9prayMn5HpBc8-vk7yHE&_nc_zt=23&_nc_ht=scontent.fsgn2-6.fna&_nc_gid=2QuGhMBsSZ9JHNiGu3midQ&oh=00_AfGiYy2JNGcdmqCsrVtXp6zB1f0balAHq7L7XzqCivP3sA&oe=68090703" />
           </Tooltip>
           <Tooltip title="anhtaidev">
             <Avatar alt="Anh Tai dep trai"
-              src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t1.6435-9/151184088_3824016630985908_1609593348639139959_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=qoW6V9vI3VwQ7kNvgF_Hm5G&_nc_oc=Adk52ESJxZPIz2NPX1cxnyAm4xXIBqc3q_aJmg3xKUFVM1tqCvxwwY6rLgz83pyR_PM&_nc_zt=23&_nc_ht=scontent.fsgn2-7.fna&_nc_gid=_YdzWKyebDtClJmUrCfvxA&oh=00_AYEQM9BY1kQhdrwZrYbBq4IE-qPskzXGHAy2-gKK88HalA&oe=6814D2DD" />
+              src="" />
           </Tooltip>
           <Tooltip title="anhtaidev">
             <Avatar alt="Anh Tai dep trai"
-              src="https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/481993368_3076417225848625_1391952600017220461_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=EZ_jBNvmfoYQ7kNvgENmFkp&_nc_oc=AdnGtpAs58e6EW5nHZgyNBgoVbkH0lxnT9oX-6isNRbXocwBl4PHI_GAc9036jQfQr4&_nc_zt=23&_nc_ht=scontent.fsgn2-5.fna&_nc_gid=n8SnLVDKHi8acSX_d3KN6A&oh=00_AYHy1u44ZRGRPHv1po5vsPT5WV1iFjwQfpQdiGfEPzgMgw&oe=67F330E9" />
+              src="" />
           </Tooltip>
           <Tooltip title="anhtaidev">
             <Avatar alt="Anh Tai dep trai"
-              src="https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/448083977_2183122202023574_407376023877496326_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=qmf3C46FpxAQ7kNvgF3OzBI&_nc_oc=AdmLFPfBYXDo4D1bRVdqMvU5MMKFl_exNU9EwU1R2drG9un6N2i5aKZkRmqMyp9auuw&_nc_zt=23&_nc_ht=scontent.fsgn2-5.fna&_nc_gid=Rt0KciQeYRk18F2_SaDcgQ&oh=00_AYGflJuxd3lC0fKarO2JxO_qHgCsksx4xONxFIpZDZ-7Ww&oe=67F32308" />
+              src="" />
           </Tooltip>
           <Tooltip title="anhtaidev">
             <Avatar alt="Anh Tai dep trai"
-              src="https://scontent.fsgn2-6.fna.fbcdn.net/v/t39.30808-6/239462814_2349880831812471_7302002402268342362_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=9yYZpTrsLr8Q7kNvgHJIV3Q&_nc_oc=AdlD04DEPzLiDJUXPZ2f1S7uSaYhL6HwoM7rwDJMNQEDn0UNZnKWQnserZk9M1qU5uE&_nc_zt=23&_nc_ht=scontent.fsgn2-6.fna&_nc_gid=_olA1okMbkEJR9s__r4vSg&oh=00_AYHycJp235urpi_-Jsjge_oNjYSnjG1HUECZoujrnXpnXw&oe=67F30D4B" />
+              src="" />
           </Tooltip>
-          
         </AvatarGroup>
       </Box>
     </Box>
