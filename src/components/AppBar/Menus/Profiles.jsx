@@ -42,7 +42,7 @@ function Profiles() {
           <Avatar 
             sx={{ width: 36, height: 36 }}
             alt="Avatar"
-            src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-1/473448564_2069625416794085_8117495553887305624_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=e99d92&_nc_ohc=Mpt-3OUltsQQ7kNvwF84bA7&_nc_oc=AdlI8LY6iVOalVWap5LobSnSfXBfz9zFRLYRaCFMcBxyj-vpbkUgW2hv2qUqYnsDJPY&_nc_zt=24&_nc_ht=scontent.fsgn2-7.fna&_nc_gid=6ap2TfTY3lGQ0NnyhzwErA&oh=00_AfFXd7tpIuEDrc7dq1IlGNUQlzMhgETmewr7w-ChyA6B0Q&oe=67F7E728"
+            src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-6/473448564_2069625416794085_8117495553887305624_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=e9ImDwM5T90Q7kNvwEmYLLY&_nc_oc=Adn1U9ifGPLETuNMLlTQooT-cTNxvEoKd_KkxBb4oC2VO_imDTkZIGkO24woxYmuiNg&_nc_zt=23&_nc_ht=scontent.fsgn2-7.fna&_nc_gid=Pa_iKT8iMs_nBRd6GTnk-g&oh=00_AfGj28E5rdS-fPHz0ZEK80yUkXaRvrXtJGF6tpnAbUKw-A&oe=680A93A6"
           />
         </IconButton>
       </Tooltip>

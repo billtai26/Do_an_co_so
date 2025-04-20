@@ -93,12 +93,14 @@ function BoardBar({ board, onSortChange, onFilterChange }) {
       '&::-webkit-scrollbar-track': { m: 2 }
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <Chip
-          sx={MENU_STYLES}
-          icon={<DashboardIcon />}
-          label={board?.title}
-          clickable
-        />
+        <Tooltip title={board?.description}>
+          <Chip
+            sx={MENU_STYLES}
+            icon={<DashboardIcon />}
+            label={board?.title}
+            clickable
+          />
+        </Tooltip>
         <Chip
           sx={MENU_STYLES}
           icon={<VpnLockIcon />}
@@ -140,8 +142,8 @@ function BoardBar({ board, onSortChange, onFilterChange }) {
             horizontal: 'left'
           }}
         >
-          <MenuItem 
-            onClick={() => handleFilterSelect('all')} 
+          <MenuItem
+            onClick={() => handleFilterSelect('all')}
             selected={activeFilter === 'all'}
           >
             <ListItemIcon>
@@ -150,8 +152,8 @@ function BoardBar({ board, onSortChange, onFilterChange }) {
             <ListItemText>All Tasks</ListItemText>
           </MenuItem>
           <Divider />
-          <MenuItem 
-            onClick={() => handleFilterSelect('todo')} 
+          <MenuItem
+            onClick={() => handleFilterSelect('todo')}
             selected={activeFilter === 'todo'}
           >
             <ListItemIcon>
@@ -159,8 +161,8 @@ function BoardBar({ board, onSortChange, onFilterChange }) {
             </ListItemIcon>
             <ListItemText>Todo</ListItemText>
           </MenuItem>
-          <MenuItem 
-            onClick={() => handleFilterSelect('doing')} 
+          <MenuItem
+            onClick={() => handleFilterSelect('doing')}
             selected={activeFilter === 'doing'}
           >
             <ListItemIcon>
@@ -168,8 +170,8 @@ function BoardBar({ board, onSortChange, onFilterChange }) {
             </ListItemIcon>
             <ListItemText>Doing</ListItemText>
           </MenuItem>
-          <MenuItem 
-            onClick={() => handleFilterSelect('done')} 
+          <MenuItem
+            onClick={() => handleFilterSelect('done')}
             selected={activeFilter === 'done'}
           >
             <ListItemIcon>
@@ -178,8 +180,8 @@ function BoardBar({ board, onSortChange, onFilterChange }) {
             <ListItemText>Done</ListItemText>
           </MenuItem>
           <Divider />
-          <MenuItem 
-            onClick={() => handleFilterSelect('high-priority')} 
+          <MenuItem
+            onClick={() => handleFilterSelect('high-priority')}
             selected={activeFilter === 'high-priority'}
           >
             <ListItemIcon>
@@ -187,8 +189,8 @@ function BoardBar({ board, onSortChange, onFilterChange }) {
             </ListItemIcon>
             <ListItemText>High Priority</ListItemText>
           </MenuItem>
-          <MenuItem 
-            onClick={() => handleFilterSelect('medium-priority')} 
+          <MenuItem
+            onClick={() => handleFilterSelect('medium-priority')}
             selected={activeFilter === 'medium-priority'}
           >
             <ListItemIcon>
@@ -196,8 +198,8 @@ function BoardBar({ board, onSortChange, onFilterChange }) {
             </ListItemIcon>
             <ListItemText>Medium Priority</ListItemText>
           </MenuItem>
-          <MenuItem 
-            onClick={() => handleFilterSelect('low-priority')} 
+          <MenuItem
+            onClick={() => handleFilterSelect('low-priority')}
             selected={activeFilter === 'low-priority'}
           >
             <ListItemIcon>
@@ -239,7 +241,7 @@ function BoardBar({ board, onSortChange, onFilterChange }) {
             <ListItemText>Default</ListItemText>
           </MenuItem>
           <Divider />
-          <MenuItem 
+          <MenuItem
             onClick={() => handleSortSelect('deadline-asc')}
             selected={activeSort === 'deadline-asc'}
           >
@@ -248,7 +250,7 @@ function BoardBar({ board, onSortChange, onFilterChange }) {
             </ListItemIcon>
             <ListItemText>By Deadline (Earliest)</ListItemText>
           </MenuItem>
-          <MenuItem 
+          <MenuItem
             onClick={() => handleSortSelect('deadline-desc')}
             selected={activeSort === 'deadline-desc'}
           >
@@ -258,7 +260,7 @@ function BoardBar({ board, onSortChange, onFilterChange }) {
             <ListItemText>By Deadline (Latest)</ListItemText>
           </MenuItem>
           <Divider />
-          <MenuItem 
+          <MenuItem
             onClick={() => handleSortSelect('priority-desc')}
             selected={activeSort === 'priority-desc'}
           >
@@ -267,7 +269,7 @@ function BoardBar({ board, onSortChange, onFilterChange }) {
             </ListItemIcon>
             <ListItemText>By Priority (Highest)</ListItemText>
           </MenuItem>
-          <MenuItem 
+          <MenuItem
             onClick={() => handleSortSelect('priority-asc')}
             selected={activeSort === 'priority-asc'}
           >
@@ -308,7 +310,7 @@ function BoardBar({ board, onSortChange, onFilterChange }) {
         >
           <Tooltip title="anhtaidev">
             <Avatar alt="Anh Tai dep trai"
-              src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-1/473448564_2069625416794085_8117495553887305624_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=e99d92&_nc_ohc=Mpt-3OUltsQQ7kNvwF84bA7&_nc_oc=AdlI8LY6iVOalVWap5LobSnSfXBfz9zFRLYRaCFMcBxyj-vpbkUgW2hv2qUqYnsDJPY&_nc_zt=24&_nc_ht=scontent.fsgn2-7.fna&_nc_gid=6ap2TfTY3lGQ0NnyhzwErA&oh=00_AfFXd7tpIuEDrc7dq1IlGNUQlzMhgETmewr7w-ChyA6B0Q&oe=67F7E728" />
+              src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-6/473448564_2069625416794085_8117495553887305624_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=e9ImDwM5T90Q7kNvwEmYLLY&_nc_oc=Adn1U9ifGPLETuNMLlTQooT-cTNxvEoKd_KkxBb4oC2VO_imDTkZIGkO24woxYmuiNg&_nc_zt=23&_nc_ht=scontent.fsgn2-7.fna&_nc_gid=Pa_iKT8iMs_nBRd6GTnk-g&oh=00_AfGj28E5rdS-fPHz0ZEK80yUkXaRvrXtJGF6tpnAbUKw-A&oe=680A93A6" />
           </Tooltip>
           <Tooltip title="anhtaidev">
             <Avatar alt="Anh Tai dep trai"
