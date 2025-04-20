@@ -21,12 +21,12 @@ import { CSS } from '@dnd-kit/utilities'
 function Card({ card: initialCard, updateCard }) {
   const [card, setCard] = useState(initialCard)
   const [modalOpen, setModalOpen] = useState(false)
-  
+
   // Add effect to update card when initialCard changes
   useEffect(() => {
     setCard(initialCard)
   }, [initialCard])
-  
+
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: card._id,
     data: { ...card }
@@ -41,7 +41,7 @@ function Card({ card: initialCard, updateCard }) {
   }
 
   const shouldShowCardActions = () => {
-    return !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length || 
+    return !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length ||
            !!card?.subtasks?.length
   }
 
@@ -56,7 +56,7 @@ function Card({ card: initialCard, updateCard }) {
 
   const handleTaskUpdate = useCallback((updatedTask) => {
     setCard(updatedTask)
-    
+
     // If there's a parent update handler, call it
     if (updateCard) {
       updateCard(updatedTask)
@@ -70,14 +70,15 @@ function Card({ card: initialCard, updateCard }) {
   }
 
   const getPriorityColor = (priority) => {
-    switch(priority) {
-      case 'high': return 'error'
-      case 'medium': return 'warning'
-      case 'low': return 'info'
-      default: return 'default'
+    switch (priority) {
+    case 'high': return 'error'
+    case 'medium': return 'warning'
+    case 'low': return 'info'
+    default: return 'default'
     }
   }
 
+  // eslint-disable-next-line no-unused-vars
   const getPriorityIcon = (priority) => {
     return <PriorityHighIcon fontSize="small" />
   }
@@ -87,7 +88,7 @@ function Card({ card: initialCard, updateCard }) {
     return (
       <MuiCard
         ref={setNodeRef}
-        style={{...dndKitCardStyles, height: '1px'}}
+        style={{ ...dndKitCardStyles, height: '1px' }}
         {...attributes}
         {...listeners}
         sx={{
@@ -112,6 +113,8 @@ function Card({ card: initialCard, updateCard }) {
           boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
           overflow: 'unset',
           display: card?.FE_PlaceholderCard ? 'none' : 'block',
+          border: '1px solid transparent',
+          '&:hover': { borderColor: (theme) => theme.palette.primary.main },
           mb: 1.5
         }}
       >
@@ -120,7 +123,7 @@ function Card({ card: initialCard, updateCard }) {
           <Typography variant="subtitle1" component="div" gutterBottom>
             {card?.title}
           </Typography>
-          
+
           <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', mt: 1 }}>
             {card?.priority && (
               <Chip
@@ -131,7 +134,7 @@ function Card({ card: initialCard, updateCard }) {
                 sx={{ height: 20, '& .MuiChip-label': { px: 1 } }}
               />
             )}
-            
+
             {card?.deadline && (
               <Chip
                 icon={<AccessTimeIcon fontSize="small" />}
@@ -143,8 +146,8 @@ function Card({ card: initialCard, updateCard }) {
             )}
           </Box>
         </CardContent>
-        
-        {shouldShowCardActions() && 
+
+        {shouldShowCardActions() &&
           <CardActions sx={{ p: '0 4px 8px 4px' }}>
             {!!card?.memberIds?.length &&
               <Button size="small" startIcon={<GroupIcon />}>{card?.memberIds?.length}</Button>
@@ -161,10 +164,10 @@ function Card({ card: initialCard, updateCard }) {
           </CardActions>
         }
       </MuiCard>
-      
-      <TaskModal 
-        open={modalOpen} 
-        onClose={() => setModalOpen(false)} 
+
+      <TaskModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
         task={card}
         onTaskUpdate={handleTaskUpdate}
       />
