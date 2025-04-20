@@ -62,10 +62,10 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
   const handleFilterToggle = (filterType) => {
     setActiveFilters(prev => {
       const isAlreadyActive = prev.includes(filterType)
-      const newFilters = isAlreadyActive 
+      const newFilters = isAlreadyActive
         ? prev.filter(filter => filter !== filterType)
         : [...prev, filterType]
-      
+
       if (onFilterChange) {
         onFilterChange(newFilters)
       }
@@ -84,7 +84,7 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
   }
 
   const [searchValue, setSearchValue] = useState('')
-  
+
   const handleSearchChange = (e) => {
     const value = e.target.value
     setSearchValue(value)
@@ -101,30 +101,30 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
   }
 
   const getFilterLabel = (filter) => {
-    switch(filter) {
-      case 'todo': return 'Todo'
-      case 'doing': return 'Doing'
-      case 'done': return 'Done'
-      case 'high-priority': return 'High Priority'
-      case 'medium-priority': return 'Medium Priority'
-      case 'low-priority': return 'Low Priority'
-      case 'due-today': return 'Due Today'
-      case 'due-this-week': return 'Due This Week'
-      default: return filter
+    switch (filter) {
+    case 'todo': return 'Todo'
+    case 'doing': return 'Doing'
+    case 'done': return 'Done'
+    case 'high-priority': return 'High Priority'
+    case 'medium-priority': return 'Medium Priority'
+    case 'low-priority': return 'Low Priority'
+    case 'due-today': return 'Due Today'
+    case 'due-this-week': return 'Due This Week'
+    default: return filter
     }
   }
 
   const getFilterIcon = (filter) => {
-    switch(filter) {
-      case 'todo': return <CheckCircleOutlineIcon fontSize="small" />
-      case 'doing': return <PlayCircleOutlineIcon fontSize="small" />
-      case 'done': return <CheckCircleOutlineIcon fontSize="small" />
-      case 'high-priority': return <PriorityHighIcon fontSize="small" />
-      case 'medium-priority': return <PriorityHighIcon fontSize="small" />
-      case 'low-priority': return <LowPriorityIcon fontSize="small" />
-      case 'due-today': return <TodayIcon fontSize="small" />
-      case 'due-this-week': return <DateRangeIcon fontSize="small" />
-      default: return <FilterListIcon fontSize="small" />
+    switch (filter) {
+    case 'todo': return <CheckCircleOutlineIcon fontSize="small" />
+    case 'doing': return <PlayCircleOutlineIcon fontSize="small" />
+    case 'done': return <CheckCircleOutlineIcon fontSize="small" />
+    case 'high-priority': return <PriorityHighIcon fontSize="small" />
+    case 'medium-priority': return <PriorityHighIcon fontSize="small" />
+    case 'low-priority': return <LowPriorityIcon fontSize="small" />
+    case 'due-today': return <TodayIcon fontSize="small" />
+    case 'due-this-week': return <DateRangeIcon fontSize="small" />
+    default: return <FilterListIcon fontSize="small" />
     }
   }
 
@@ -242,7 +242,7 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
               endAdornment: (
                 <InputAdornment position="end">
                   {searchValue && (
-                    <IconButton 
+                    <IconButton
                       edge="end"
                       onClick={clearSearch}
                       sx={{ color: 'white', p: 0.5 }}
@@ -253,8 +253,8 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
                   <IconButton
                     edge="end"
                     onClick={handleFilterClick}
-                    sx={{ 
-                      color: 'white', 
+                    sx={{
+                      color: 'white',
                       p: 0.5,
                       bgcolor: activeFilters.length > 0 ? 'rgba(255, 255, 255, 0.2)' : 'transparent'
                     }}
@@ -296,19 +296,19 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
             onClose={handleFilterClose}
             anchorOrigin={{
               vertical: 'bottom',
-              horizontal: 'right',
+              horizontal: 'right'
             }}
             transformOrigin={{
               vertical: 'top',
-              horizontal: 'right',
+              horizontal: 'right'
             }}
           >
             <Box sx={{ p: 2, width: 300 }}>
               <Typography variant="subtitle1" sx={{ mb: 1 }}>Filter Tasks</Typography>
-              
+
               <Typography variant="subtitle2" sx={{ mt: 2, mb: 1 }}>Status</Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                <MenuItem 
+                <MenuItem
                   onClick={() => handleFilterToggle('todo')}
                   selected={activeFilters.includes('todo')}
                   dense
@@ -318,7 +318,7 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
                   </ListItemIcon>
                   <ListItemText>Todo</ListItemText>
                 </MenuItem>
-                <MenuItem 
+                <MenuItem
                   onClick={() => handleFilterToggle('doing')}
                   selected={activeFilters.includes('doing')}
                   dense
@@ -328,7 +328,7 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
                   </ListItemIcon>
                   <ListItemText>Doing</ListItemText>
                 </MenuItem>
-                <MenuItem 
+                <MenuItem
                   onClick={() => handleFilterToggle('done')}
                   selected={activeFilters.includes('done')}
                   dense
@@ -341,10 +341,10 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
               </Box>
 
               <Divider sx={{ my: 1.5 }} />
-              
+
               <Typography variant="subtitle2" sx={{ mb: 1 }}>Priority</Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                <MenuItem 
+                <MenuItem
                   onClick={() => handleFilterToggle('high-priority')}
                   selected={activeFilters.includes('high-priority')}
                   dense
@@ -354,7 +354,7 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
                   </ListItemIcon>
                   <ListItemText>High</ListItemText>
                 </MenuItem>
-                <MenuItem 
+                <MenuItem
                   onClick={() => handleFilterToggle('medium-priority')}
                   selected={activeFilters.includes('medium-priority')}
                   dense
@@ -364,7 +364,7 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
                   </ListItemIcon>
                   <ListItemText>Medium</ListItemText>
                 </MenuItem>
-                <MenuItem 
+                <MenuItem
                   onClick={() => handleFilterToggle('low-priority')}
                   selected={activeFilters.includes('low-priority')}
                   dense
@@ -377,10 +377,10 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
               </Box>
 
               <Divider sx={{ my: 1.5 }} />
-              
+
               <Typography variant="subtitle2" sx={{ mb: 1 }}>Due Date</Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                <MenuItem 
+                <MenuItem
                   onClick={() => handleFilterToggle('due-today')}
                   selected={activeFilters.includes('due-today')}
                   dense
@@ -390,7 +390,7 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
                   </ListItemIcon>
                   <ListItemText>Today</ListItemText>
                 </MenuItem>
-                <MenuItem 
+                <MenuItem
                   onClick={() => handleFilterToggle('due-this-week')}
                   selected={activeFilters.includes('due-this-week')}
                   dense
@@ -401,11 +401,11 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
                   <ListItemText>This Week</ListItemText>
                 </MenuItem>
               </Box>
-              
+
               {activeFilters.length > 0 && (
                 <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
-                  <Button 
-                    variant="outlined" 
+                  <Button
+                    variant="outlined"
                     size="small"
                     onClick={() => {
                       setActiveFilters([])
@@ -422,11 +422,11 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
 
         {/* Active Filters */}
         {activeFilters.length > 0 && (
-          <Box sx={{ 
-            display: { xs: 'none', sm: 'flex' }, 
-            gap: 0.5, 
+          <Box sx={{
+            display: { xs: 'none', sm: 'flex' },
+            gap: 0.5,
             flexWrap: 'wrap',
-            maxWidth: 300 
+            maxWidth: 300
           }}>
             {activeFilters.map(filter => (
               <Chip
@@ -435,8 +435,8 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
                 size="small"
                 icon={getFilterIcon(filter)}
                 onDelete={() => handleRemoveFilter(filter)}
-                sx={{ 
-                  bgcolor: 'rgba(255, 255, 255, 0.15)', 
+                sx={{
+                  bgcolor: 'rgba(255, 255, 255, 0.15)',
                   color: 'white',
                   '.MuiChip-deleteIcon': { color: 'white' },
                   '.MuiChip-icon': { color: 'white' }
@@ -445,7 +445,7 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
             ))}
           </Box>
         )}
-        
+
         <ModeSelect mode={mode} setMode={setMode} />
 
         <Tooltip title="Notifications">
