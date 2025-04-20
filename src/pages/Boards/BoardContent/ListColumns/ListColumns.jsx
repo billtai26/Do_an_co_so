@@ -7,6 +7,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
 import { useState, useCallback, useEffect } from 'react'
+import { toast } from 'react-toastify'
 import { InputAdornment, TextField } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 
@@ -18,7 +19,7 @@ function ListColumns({ columns: initialColumns, onColumnsUpdate }) {
 
   const addNewColumn = () => {
     if (!newColumnTitle) {
-      // console.error('Please enter Column Title!')
+      toast.error('Please enter Column Title!')
       return
     }
 
