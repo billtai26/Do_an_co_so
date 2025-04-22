@@ -11,20 +11,30 @@ import { toast } from 'react-toastify'
 import { InputAdornment, TextField } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 
-function ListColumns({ columns: initialColumns, onColumnsUpdate }) {
+function ListColumns({ columns: initialColumns, onColumnsUpdate, createNewColumn, createNewCard }) {
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const toggleOpenNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
 
   const [newColumnTitle, setNewColumnTitle] = useState('')
 
-  const addNewColumn = () => {
+  const addNewColumn = async () => {
     if (!newColumnTitle) {
       toast.error('Please enter Column Title!')
       return
     }
 
-    // console.log(newColumnTitle)
-    // Gọi API ở đây...
+    // Tạo dữ liệu Column để gọi API
+    const newColumnData = {
+      title: newColumnTitle
+    }
+
+    /**
+     * Gọi lên props function createNewColumn nằm ở component cha cao nhất (board/_id.jsx)
+     * Lưu ý: Về sau học phần MERN Stack Advance nâng cao học trực tiếp với mình thì chúng ta sẽ đưa dữ liệu Board ra ngoài Redux Global Store,
+     * Thì lúc này chúng ta có thể gọi luôn API ở đây là xong thay vì phải lần lượt gọi ngược lên những component cha phía bên trên. (Đối với component con nằm càng sâu thì càng khổ)
+     * - Với việc sử dụng Redux như vậy thì code sẽ Clean chuẩn chỉnh hơn rất nhiều.
+     */
+    await createNewColumn(newColumnData)
 
     // Đóng trạng thái thêm Column mới & Clear Input
     toggleOpenNewColumnForm()
@@ -75,14 +85,7 @@ function ListColumns({ columns: initialColumns, onColumnsUpdate }) {
         '&::-webkit-scrollbar-track': { m: 2 },
         pr: isMobile ? 1 : 0
       }}>
-        {columns?.map(column => (
-          <Column
-            {...commonColumnProps}
-            key={column._id}
-            column={column}
-            onColumnUpdate={handleColumnUpdate}
-          />
-        ))}
+        {columns?.map(column => <Column {...commonColumnProps} key={column._id} column={column} onColumnUpdate={handleColumnUpdate} createNewCard={createNewCard} />)}
 
         {/* Box Add new column CTA */}
         {!openNewColumnForm
