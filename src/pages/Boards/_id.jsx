@@ -12,7 +12,7 @@ import BoardContent from './BoardContent/BoardContent'
 import { mockData } from '~/apis/mock-data'
 import { cloneDeep, isEmpty } from 'lodash'
 
-import { fetchBoardDetailsAPI, createNewColumnAPI, createNewCardAPI } from '~/apis'
+import { fetchBoardDetailsAPI, createNewColumnAPI, createNewCardAPI, updateBoardDetailsAPI } from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatters'
 
 function Board() {
@@ -71,6 +71,19 @@ function Board() {
       columnToUpdate.cardOrderIds.push(createdCard._id)
     }
     setBoard(newBoard)
+  }
+
+  // Func này có nhiệm vụ gọi API và xử lý khi kéo thả Column xong xuôi.
+  const moveColumn = async (dndOrderedColumns) => {
+    // Update lại cho chuẩn dữ liệu state Board
+    const dndOrderedColumnsIds = dndOrderedColumns.map(c => c._id)
+    const newBoard = { ...board }
+    newBoard.columns = dndOrderedColumns
+    newBoard.columnOrderIds = dndOrderedColumnsIds
+    setBoard(newBoard)
+
+    // Gọi API update Board
+    await updateBoardDetailsAPI(newBoard._id, { columnOrderIds: dndOrderedColumnsIds })
   }
 
   const [mode, setMode] = useState(() => {
@@ -328,6 +341,7 @@ function Board() {
           board={board}
           createNewColumn={createNewColumn}
           createNewCard={createNewCard}
+          moveColumn={moveColumn}
         />
       </Container>
     </ThemeProvider>
