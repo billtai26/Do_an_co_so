@@ -161,7 +161,7 @@ function AppBar({ mode, setMode, onSearch, onFilterChange }) {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
           <SvgIcon component={TrelloIcon} fontSize="small" inheritViewBox sx={{ color: 'white' }} />
           <Typography variant="span" sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'white' }}
-          >Jira</Typography>
+          >Planify</Typography>
         </Box>
 
         {/* Desktop Menu */}
