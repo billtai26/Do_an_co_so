@@ -36,9 +36,12 @@ function Column({ sx, column, onColumnUpdate, createNewCard, deleteColumnDetails
   const dndKitColumnStyles = {
     // touchAction: 'none', // Dành cho sensor default dạng PointerSensor
     transform: CSS.Translate.toString(transform),
-    transition,
+    transition: transition + ', box-shadow 0.2s',
     height: '100%',
-    opacity: isDragging ? 0.5 : undefined
+    opacity: isDragging ? 0.5 : undefined,
+    boxShadow: isDragging ? '0 8px 15px rgba(0, 0, 0, 0.3)' : undefined,
+    zIndex: isDragging ? 9999 : undefined,
+    animation: isDragging ? 'none' : 'columnAppear 0.4s ease-out'
   }
 
   const theme = useTheme()
@@ -131,16 +134,32 @@ function Column({ sx, column, onColumnUpdate, createNewCard, deleteColumnDetails
           borderRadius: '6px',
           height: 'fit-content',
           maxHeight: (theme) => `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`,
+          '@keyframes columnAppear': {
+            '0%': {
+              opacity: 0,
+              transform: 'translateX(-10px)'
+            },
+            '100%': {
+              opacity: 1,
+              transform: 'translateX(0)'
+            }
+          },
+          '&:hover': {
+            '& .drag-handle': {
+              visibility: 'visible',
+              opacity: 1
+            }
+          },
           ...sx
         }}
       >
         {/* Box Colum Header*/}
-        <Box sx={{
-          height: (theme) => theme.trello.columnHeaderHeight,
+        <Box sx={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'space-between',
           p: 2,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
+          height: (theme) => theme.trello.columnHeaderHeight
         }}>
           <Typography variant="h6" sx={{
             fontSize: '1rem',
@@ -223,6 +242,21 @@ function Column({ sx, column, onColumnUpdate, createNewCard, deleteColumnDetails
           height:  (theme) => theme.trello.columnFooterHeight,
           p: 2
         }}>
+
+          <Button startIcon={<AddCardIcon />}>Add new card</Button>
+          <Tooltip title="Drag to move">
+            <DragHandleIcon 
+              className="drag-handle"
+              sx={{ 
+                cursor: 'pointer',
+                color: 'text.primary',
+                visibility: { xs: 'visible', sm: 'hidden' },
+                opacity: { xs: 1, sm: 0 },
+                transition: 'all 0.2s',
+              }} 
+            />
+          </Tooltip>
+
           {!openNewCardForm
             ? <Box sx={{
               height: '100%',
@@ -289,6 +323,7 @@ function Column({ sx, column, onColumnUpdate, createNewCard, deleteColumnDetails
               </Box>
             </Box>
           }
+
         </Box>
       </Box>
     </div>

@@ -35,9 +35,12 @@ function Card({ card: initialCard, updateCard }) {
   const dndKitCardStyles = {
     // touchAction: 'none', // Dành cho sensor default dạng PointerSensor
     transform: CSS.Translate.toString(transform),
-    transition,
+    transition: transition + ', border 0.2s, box-shadow 0.2s',
     opacity: isDragging ? 0.5 : undefined,
-    border: isDragging ? '1px solid #2ecc71' : undefined
+    border: isDragging ? '1px solid #2ecc71' : undefined,
+    boxShadow: isDragging ? '0 5px 10px rgba(0, 0, 0, 0.2)' : undefined,
+    zIndex: isDragging ? 9999 : undefined,
+    animation: isDragging ? 'none' : 'cardAppear 0.3s ease-in-out'
   }
 
   const shouldShowCardActions = () => {
@@ -113,9 +116,28 @@ function Card({ card: initialCard, updateCard }) {
           boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
           overflow: 'unset',
           display: card?.FE_PlaceholderCard ? 'none' : 'block',
+
+          mb: 1.5,
+          '&:hover': {
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+            transform: 'translateY(-2px)',
+            transition: 'transform 0.2s, box-shadow 0.2s'
+          },
+          '@keyframes cardAppear': {
+            '0%': {
+              opacity: 0,
+              transform: 'translateY(10px)'
+            },
+            '100%': {
+              opacity: 1,
+              transform: 'translateY(0)'
+            }
+          }
+
           border: '1px solid transparent',
           '&:hover': { borderColor: (theme) => theme.palette.primary.main },
           mb: 1.5
+
         }}
       >
         {card?.cover && <CardMedia sx={{ height: 140 }} image={card?.cover} /> }
