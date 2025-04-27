@@ -272,11 +272,11 @@ function Board() {
           onFilterChange={handleFilterChange}
         />
         <BoardBar
-          board={board}
+          board={board || filteredBoardData}
           onSortChange={handleSortChange}
           onFilterChange={handleFilterChange}
         />
-        <BoardContent board={board} />
+        <BoardContent board={board || filteredBoardData} />
       </Container>
     </ThemeProvider>
   )
