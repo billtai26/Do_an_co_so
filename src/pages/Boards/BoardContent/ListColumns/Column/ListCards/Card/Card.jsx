@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Card as MuiCard } from '@mui/material'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
@@ -132,7 +133,7 @@ function Card({ card: initialCard, updateCard }) {
               opacity: 1,
               transform: 'translateY(0)'
             }
-          }
+          },
 
           border: '1px solid transparent',
           '&:hover': { borderColor: (theme) => theme.palette.primary.main },
