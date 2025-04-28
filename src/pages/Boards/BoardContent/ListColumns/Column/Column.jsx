@@ -154,9 +154,9 @@ function Column({ sx, column, onColumnUpdate, createNewCard, deleteColumnDetails
         }}
       >
         {/* Box Colum Header*/}
-        <Box sx={{ 
-          display: 'flex', 
-          alignItems: 'center', 
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
           justifyContent: 'space-between',
           p: 2,
           height: (theme) => theme.trello.columnHeaderHeight
@@ -242,20 +242,6 @@ function Column({ sx, column, onColumnUpdate, createNewCard, deleteColumnDetails
           height:  (theme) => theme.trello.columnFooterHeight,
           p: 2
         }}>
-
-          <Button startIcon={<AddCardIcon />}>Add new card</Button>
-          <Tooltip title="Drag to move">
-            <DragHandleIcon 
-              className="drag-handle"
-              sx={{ 
-                cursor: 'pointer',
-                color: 'text.primary',
-                visibility: { xs: 'visible', sm: 'hidden' },
-                opacity: { xs: 1, sm: 0 },
-                transition: 'all 0.2s',
-              }} 
-            />
-          </Tooltip>
 
           {!openNewCardForm
             ? <Box sx={{

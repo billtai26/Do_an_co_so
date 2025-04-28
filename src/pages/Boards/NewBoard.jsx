@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react'
 import { Box, Typography, TextField, Button, Paper, IconButton } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
@@ -18,7 +19,7 @@ const NewBoard = () => {
       ...boardData,
       [name]: value
     })
-    
+
     // Clear error when user types
     if (errors[name]) {
       setErrors({
@@ -39,11 +40,11 @@ const NewBoard = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    
+
     if (validateForm()) {
       // Here you would typically send the data to your API
-      console.log('Creating board:', boardData)
-      
+      // console.log('Creating board:', boardData)
+
       // For demo purposes, we'll just navigate back to the boards list
       navigate('/boards')
     }
@@ -71,7 +72,7 @@ const NewBoard = () => {
             helperText={errors.title}
             required
           />
-          
+
           <TextField
             fullWidth
             label="Description"
@@ -82,7 +83,7 @@ const NewBoard = () => {
             multiline
             rows={3}
           />
-          
+
           <TextField
             fullWidth
             label="Background Color"
@@ -92,19 +93,19 @@ const NewBoard = () => {
             onChange={handleChange}
             margin="normal"
             InputLabelProps={{
-              shrink: true,
+              shrink: true
             }}
           />
-          
+
           <Box sx={{ mt: 4, display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-            <Button 
-              variant="outlined" 
+            <Button
+              variant="outlined"
               onClick={() => navigate('/boards')}
             >
               Cancel
             </Button>
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               variant="contained"
             >
               Create Board
@@ -116,4 +117,4 @@ const NewBoard = () => {
   )
 }
 
-export default NewBoard 
+export default NewBoard

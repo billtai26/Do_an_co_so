@@ -1,5 +1,18 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react'
-import { Box, Typography, Button, Grid, Card, CardContent, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material'
+import {
+  Box,
+  Typography,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add'
 import EditIcon from '@mui/icons-material/Edit'
@@ -12,7 +25,7 @@ const BoardList = () => {
     { id: '2', title: 'Personal Tasks', description: 'Personal to-do list' },
     { id: '3', title: 'Team Sprint', description: 'Current sprint tasks' }
   ])
-  
+
   const [openCreateDialog, setOpenCreateDialog] = useState(false)
   const [openEditDialog, setOpenEditDialog] = useState(false)
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
@@ -31,7 +44,7 @@ const BoardList = () => {
   }
 
   const handleEditBoard = () => {
-    setBoards(boards.map(board => 
+    setBoards(boards.map(board =>
       board.id === currentBoard.id ? { ...board, ...newBoardData } : board
     ))
     setOpenEditDialog(false)
@@ -47,11 +60,11 @@ const BoardList = () => {
   }
 
   return (
-    <Box sx={{ p: 4 }}>
+    <Box sx={{ p: 4, bgcolor: '#90caf9', minHeight: '100vh' }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
         <Typography variant="h4" component="h1">My Boards</Typography>
-        <Button 
-          variant="contained" 
+        <Button
+          variant="contained"
           startIcon={<AddIcon />}
           onClick={() => setOpenCreateDialog(true)}
         >
@@ -62,10 +75,10 @@ const BoardList = () => {
       <Grid container spacing={3}>
         {boards.map(board => (
           <Grid item xs={12} sm={6} md={4} key={board.id}>
-            <Card 
-              sx={{ 
-                height: '100%', 
-                display: 'flex', 
+            <Card
+              sx={{
+                height: '100%',
+                display: 'flex',
                 flexDirection: 'column',
                 cursor: 'pointer',
                 '&:hover': { boxShadow: 6 }
@@ -80,23 +93,23 @@ const BoardList = () => {
                 </Typography>
               </CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
-                <IconButton 
+                <IconButton
                   size="small"
                   onClick={(e) => {
-                    e.stopPropagation();
-                    setCurrentBoard(board);
-                    setNewBoardData({ title: board.title, description: board.description });
-                    setOpenEditDialog(true);
+                    e.stopPropagation()
+                    setCurrentBoard(board)
+                    setNewBoardData({ title: board.title, description: board.description })
+                    setOpenEditDialog(true)
                   }}
                 >
                   <EditIcon fontSize="small" />
                 </IconButton>
-                <IconButton 
+                <IconButton
                   size="small"
                   onClick={(e) => {
-                    e.stopPropagation();
-                    setCurrentBoard(board);
-                    setOpenDeleteDialog(true);
+                    e.stopPropagation()
+                    setCurrentBoard(board)
+                    setOpenDeleteDialog(true)
                   }}
                 >
                   <DeleteIcon fontSize="small" />
@@ -118,7 +131,7 @@ const BoardList = () => {
             fullWidth
             variant="outlined"
             value={newBoardData.title}
-            onChange={(e) => setNewBoardData({...newBoardData, title: e.target.value})}
+            onChange={(e) => setNewBoardData({ ...newBoardData, title: e.target.value })}
           />
           <TextField
             margin="dense"
@@ -126,7 +139,7 @@ const BoardList = () => {
             fullWidth
             variant="outlined"
             value={newBoardData.description}
-            onChange={(e) => setNewBoardData({...newBoardData, description: e.target.value})}
+            onChange={(e) => setNewBoardData({ ...newBoardData, description: e.target.value })}
           />
         </DialogContent>
         <DialogActions>
@@ -146,7 +159,7 @@ const BoardList = () => {
             fullWidth
             variant="outlined"
             value={newBoardData.title}
-            onChange={(e) => setNewBoardData({...newBoardData, title: e.target.value})}
+            onChange={(e) => setNewBoardData({ ...newBoardData, title: e.target.value })}
           />
           <TextField
             margin="dense"
@@ -154,7 +167,7 @@ const BoardList = () => {
             fullWidth
             variant="outlined"
             value={newBoardData.description}
-            onChange={(e) => setNewBoardData({...newBoardData, description: e.target.value})}
+            onChange={(e) => setNewBoardData({ ...newBoardData, description: e.target.value })}
           />
         </DialogContent>
         <DialogActions>
@@ -180,4 +193,4 @@ const BoardList = () => {
   )
 }
 
-export default BoardList 
+export default BoardList
