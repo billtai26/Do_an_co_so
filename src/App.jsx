@@ -18,7 +18,7 @@ const ProtectedRoute = ({ children }) => {
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  
+
   useEffect(() => {
     const checkAuth = () => {
       const auth = localStorage.getItem('isAuthenticated') === 'true'
