@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { Card as MuiCard } from '@mui/material'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
@@ -15,6 +14,7 @@ import Box from '@mui/material/Box'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh'
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined'
+import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -46,7 +46,7 @@ function Card({ card: initialCard, updateCard }) {
 
   const shouldShowCardActions = () => {
     return !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length ||
-           !!card?.subtasks?.length
+           !!card?.subtasks?.length || (card?.votes?.upvotes?.length || card?.votes?.downvotes?.length)
   }
 
   const handleOpenModal = (e) => {
@@ -82,7 +82,11 @@ function Card({ card: initialCard, updateCard }) {
     }
   }
 
-  // eslint-disable-next-line no-unused-vars
+  const getVoteCount = () => {
+    if (!card.votes) return 0
+    return (card.votes.upvotes?.length || 0) - (card.votes.downvotes?.length || 0)
+  }
+
   const getPriorityIcon = (priority) => {
     return <PriorityHighIcon fontSize="small" />
   }
@@ -164,6 +168,16 @@ function Card({ card: initialCard, updateCard }) {
                 label={formatDate(card.deadline)}
                 size="small"
                 variant="outlined"
+                sx={{ height: 20, '& .MuiChip-label': { px: 1 } }}
+              />
+            )}
+
+            {getVoteCount() !== 0 && (
+              <Chip
+                icon={<ThumbUpIcon fontSize="small" />}
+                label={getVoteCount()}
+                size="small"
+                color={getVoteCount() > 0 ? 'primary' : 'default'}
                 sx={{ height: 20, '& .MuiChip-label': { px: 1 } }}
               />
             )}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { 
-  Modal, Box, Typography, IconButton, TextField, 
-  Divider, Tabs, Tab, List, ListItem, ListItemText, 
+import {
+  Modal, Box, Typography, IconButton, TextField,
+  Divider, Tabs, Tab, List, ListItem, ListItemText,
   ListItemIcon, Checkbox, Button, Chip, Avatar,
   InputAdornment, Paper
 } from '@mui/material'
@@ -12,6 +12,7 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 import AddIcon from '@mui/icons-material/Add'
 import SendIcon from '@mui/icons-material/Send'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import TaskVoting from '../TaskVoting'
 
 const style = {
   position: 'absolute',
@@ -27,23 +28,19 @@ const style = {
   overflow: 'auto'
 }
 
-const TabPanel = ({ children, value, index, ...other }) => {
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`tabpanel-${index}`}
-      aria-labelledby={`tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ pt: 2 }}>
-          {children}
-        </Box>
-      )}
-    </div>
-  )
-}
+const TabPanel = ({ children, value, index, ...other }) => (
+  <div
+    role="tabpanel"
+    hidden={value !== index}
+    id={`tabpanel-${index}`}
+    aria-labelledby={`tab-${index}`}
+    {...other}
+  >
+    {value === index && (
+      <Box sx={{ pt: 2 }}>{children}</Box>
+    )}
+  </div>
+)
 
 function TaskModal({ open, onClose, task, onTaskUpdate }) {
   const [tabValue, setTabValue] = useState(0)
@@ -53,84 +50,126 @@ function TaskModal({ open, onClose, task, onTaskUpdate }) {
   const [newSubtask, setNewSubtask] = useState('')
   const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState('')
+  const [currentUserVote, setCurrentUserVote] = useState(null)
 
   useEffect(() => {
     if (task) {
       setEditedTitle(task.title || '')
       setEditedDescription(task.description || '')
       
-      // Ensure subtasks have IDs
       const processedSubtasks = (task.subtasks || []).map(subtask => {
         if (typeof subtask === 'string') {
-          return { id: `subtask-${Date.now()}-${Math.random()}`, text: subtask, completed: false }
+          return { 
+            id: `subtask-${Date.now()}-${Math.random()}`,
+            text: subtask,
+            completed: false
+          }
         }
-        return subtask.id ? subtask : { ...subtask, id: `subtask-${Date.now()}-${Math.random()}` }
+        return subtask.id ? subtask : {
+          ...subtask,
+          id: `subtask-${Date.now()}-${Math.random()}`
+        }
       })
       setSubtasks(processedSubtasks)
       
-      // Ensure comments have IDs
       const processedComments = (task.comments || []).map((comment, index) => {
         if (typeof comment === 'string') {
-          return { 
-            id: `comment-${Date.now()}-${index}`, 
-            author: 'User', 
-            text: comment, 
-            timestamp: new Date().toISOString() 
+          return {
+            id: `comment-${Date.now()}-${index}`,
+            author: 'User',
+            text: comment,
+            timestamp: new Date().toISOString()
           }
         }
-        return comment.id ? comment : { ...comment, id: `comment-${Date.now()}-${index}` }
+        return comment.id ? comment : {
+          ...comment,
+          id: `comment-${Date.now()}-${index}`
+        }
       })
       setComments(processedComments)
+
+      if (task.votes) {
+        const userId = 'current-user-id'
+        if (task.votes.upvotes?.includes(userId)) {
+          setCurrentUserVote('up')
+        } else if (task.votes.downvotes?.includes(userId)) {
+          setCurrentUserVote('down')
+        }
+      }
     }
   }, [task])
 
-  if (!task) return null
+  const handleVote = (voteType) => {
+    const userId = 'current-user-id'
+    let newVotes = task.votes || { upvotes: [], downvotes: [] }
 
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue)
+    if (currentUserVote === voteType) {
+      newVotes = {
+        upvotes: newVotes.upvotes.filter(id => id !== userId),
+        downvotes: newVotes.downvotes.filter(id => id !== userId)
+      }
+      setCurrentUserVote(null)
+    } else {
+      newVotes = {
+        upvotes: newVotes.upvotes.filter(id => id !== userId),
+        downvotes: newVotes.downvotes.filter(id => id !== userId)
+      }
+      if (voteType === 'up') {
+        newVotes.upvotes.push(userId)
+      } else {
+        newVotes.downvotes.push(userId)
+      }
+      setCurrentUserVote(voteType)
+    }
+
+    if (onTaskUpdate) {
+      onTaskUpdate({
+        ...task,
+        votes: newVotes
+      })
+    }
   }
+
+  const handleTabChange = (event, newValue) => setTabValue(newValue)
 
   const handleAddSubtask = () => {
     if (newSubtask.trim()) {
-      const updatedSubtasks = [...subtasks, { id: `subtask-${Date.now()}`, text: newSubtask, completed: false }];
+      const updatedSubtasks = [...subtasks, { id: `subtask-${Date.now()}`, text: newSubtask, completed: false }]
       setSubtasks(updatedSubtasks)
       setNewSubtask('')
       
-      // Notify parent component of the update
       if (onTaskUpdate) {
         onTaskUpdate({
           ...task,
           subtasks: updatedSubtasks
-        });
+        })
       }
     }
   }
 
   const handleSubtaskToggle = (subtaskId) => {
-    const updatedSubtasks = subtasks.map(subtask => 
+    const updatedSubtasks = subtasks.map(subtask =>
       subtask.id === subtaskId ? { ...subtask, completed: !subtask.completed } : subtask
-    );
-    setSubtasks(updatedSubtasks);
+    )
+    setSubtasks(updatedSubtasks)
     
-    // Notify parent component of the update
     if (onTaskUpdate) {
       onTaskUpdate({
         ...task,
         subtasks: updatedSubtasks
-      });
+      })
     }
   }
 
   const handleDeleteSubtask = (subtaskId) => {
-    const updatedSubtasks = subtasks.filter(subtask => subtask.id !== subtaskId);
-    setSubtasks(updatedSubtasks);
+    const updatedSubtasks = subtasks.filter(subtask => subtask.id !== subtaskId)
+    setSubtasks(updatedSubtasks)
     
-    // Notify parent component of the update
     if (onTaskUpdate) {
       onTaskUpdate({
         ...task,
         subtasks: updatedSubtasks
-      });
+      })
     }
   }
 
@@ -142,36 +181,33 @@ function TaskModal({ open, onClose, task, onTaskUpdate }) {
         text: newComment,
         timestamp: new Date().toISOString()
       }
-      const updatedComments = [...comments, newCommentObj];
+      const updatedComments = [...comments, newCommentObj]
       setComments(updatedComments)
       setNewComment('')
       
-      // Notify parent component of the update
       if (onTaskUpdate) {
         onTaskUpdate({
           ...task,
           comments: updatedComments
-        });
+        })
       }
     }
   }
-  
+
   const handleSaveChanges = () => {
-    // Create updated task with all changes
     const updatedTask = {
       ...task,
       title: editedTitle,
       description: editedDescription,
-      subtasks: subtasks,
-      comments: comments
-    };
-    
-    // Notify parent component of all updates
-    if (onTaskUpdate) {
-      onTaskUpdate(updatedTask);
+      subtasks,
+      comments
     }
     
-    onClose();
+    if (onTaskUpdate) {
+      onTaskUpdate(updatedTask)
+    }
+    
+    onClose()
   }
 
   return (
@@ -191,14 +227,22 @@ function TaskModal({ open, onClose, task, onTaskUpdate }) {
           </IconButton>
         </Box>
 
-        <TextField
-          fullWidth
-          label="Title"
-          variant="outlined"
-          value={editedTitle}
-          onChange={(e) => setEditedTitle(e.target.value)}
-          sx={{ mb: 2 }}
-        />
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+          <TextField
+            fullWidth
+            label="Title"
+            variant="outlined"
+            value={editedTitle}
+            onChange={(e) => setEditedTitle(e.target.value)}
+            sx={{ mr: 2 }}
+          />
+          
+          <TaskVoting
+            votes={task?.votes}
+            onVote={handleVote}
+            currentUserVote={currentUserVote}
+          />
+        </Box>
 
         <TextField
           fullWidth
@@ -219,7 +263,6 @@ function TaskModal({ open, onClose, task, onTaskUpdate }) {
           </Tabs>
         </Box>
 
-        {/* Subtasks Tab */}
         <TabPanel value={tabValue} index={0}>
           <Box sx={{ display: 'flex', mb: 2 }}>
             <TextField
@@ -271,7 +314,6 @@ function TaskModal({ open, onClose, task, onTaskUpdate }) {
           </List>
         </TabPanel>
 
-        {/* Attachments Tab */}
         <TabPanel value={tabValue} index={1}>
           <Button 
             variant="outlined" 
@@ -310,7 +352,6 @@ function TaskModal({ open, onClose, task, onTaskUpdate }) {
           </List>
         </TabPanel>
 
-        {/* Comments Tab */}
         <TabPanel value={tabValue} index={2}>
           <Box sx={{ display: 'flex', mb: 3 }}>
             <TextField
@@ -357,9 +398,14 @@ function TaskModal({ open, onClose, task, onTaskUpdate }) {
             </Typography>
           )}
         </TabPanel>
+
+        <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+          <Button onClick={onClose}>Cancel</Button>
+          <Button variant="contained" onClick={handleSaveChanges}>Save Changes</Button>
+        </Box>
       </Box>
     </Modal>
   )
 }
 
-export default TaskModal 
+export default TaskModal
