@@ -1,6 +1,14 @@
 /* eslint-disable no-unused-vars */
 import Box from '@mui/material/Box'
 import ListColumns from './ListColumns/ListColumns'
+import BoardMembers from '~/components/BoardMembers'
+import TaskTimeline from '~/components/TaskTimeline'
+import ActivityLog from '~/components/ActivityLog'
+import PersonalNotes from '~/components/PersonalNotes'
+import FocusMode from '~/components/FocusMode'
+import { Paper, Drawer, IconButton, Divider } from '@mui/material'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 
 import {
   DndContext,
@@ -27,6 +35,7 @@ import { generatePlaceholderCard } from '~/utils/formatters'
 import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Card/Card'
 
+// Định nghĩa các type kéo thả
 const ACTIVE_DRAG_ITEM_TYPE = {
   COLUMN: 'ACTIVE_DRAG_ITEM_TYPE_COLUMN',
   CARD: 'ACTIVE_DRAG_ITEM_TYPE_CARD'
@@ -44,12 +53,14 @@ function BoardContent({
 
   // const pointerSensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
 
-  // Yêu cầu chuột phải di chuyển 10px thì mới kích hoạt event, fix trường hợp click bị gọi event
+  // Yêu cầu chuột di chuyển 10px thì mới kích hoạt event drag
   const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 10 } })
 
+  // Nhấn giữ 250ms và dung sai của cảm ứng 500px thì mới kích hoạt event drag
   const touchSensor = useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 500 } })
 
   // const sensors = useSensors(pointerSensor)
+  // Các sensors được kích hoạt
   const sensors = useSensors(mouseSensor, touchSensor)
 
   const [orderedColumns, setOrderedColumns] = useState([])
@@ -62,6 +73,8 @@ function BoardContent({
 
   // Điểm va chạm cuối cùng trước đó (xử lý thuật toán phát hiện va chạm)
   const lastOverId = useRef(null)
+  const [openSidePanel, setOpenSidePanel] = useState(false)
+  const [focusModeEnabled, setFocusModeEnabled] = useState(false)
 
   useEffect(() => {
     // Columns đã được sắp xếp ở component cha cao nhất (boards/_id.jsx) (Video 71 đã giải thích lý do)
@@ -320,6 +333,7 @@ function BoardContent({
     setOldColumnWhenDraggingCard(null)
   }
 
+  // Animation khi thả phần tử - Test bằng cách kéo xong thả trực tiếp và nhìn phần tử bay về vị trí mới
   const customdropAnimation = {
     sideEffects: defaultDropAnimationSideEffects({ styles: { active: { opacity: '0.5' } } })
   }
@@ -366,6 +380,24 @@ function BoardContent({
     return lastOverId.current ? [{ id: lastOverId.current }] : []
   }, [activeDragItemType, orderedColumns])
 
+  // Lọc ra mảng các task không bị ẩn (không phải placeholder)
+  const allTasks = board?.columns?.reduce((acc, column) => {
+    return [...acc, ...column.cards.filter(card => !card.FE_PlaceholderCard)]
+  }, []) || []
+
+  // Xử lý khi hoàn thành task
+  const handleTaskComplete = (taskId) => {
+    const updatedColumns = orderedColumns.map(column => ({
+      ...column,
+      cards: column.cards.map(card => (
+        card._id === taskId ? { ...card, completed: !card.completed } : card
+      ))
+    }))
+    handleColumnsUpdate(updatedColumns)
+  }
+
+  const DRAWER_WIDTH = 340
+
   return (
     <DndContext
       sensors={sensors}
@@ -383,15 +415,101 @@ function BoardContent({
         bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#34495e' : '#1976d2'),
         width: '100%',
         height: (theme) => theme.trello.boardContentHeight,
-        p: '10px 0'
+        display: 'flex'
       }}>
-        <ListColumns
-          columns={orderedColumns}
-          onColumnsUpdate={handleColumnsUpdate}
-          createNewColumn={createNewColumn}
-          createNewCard={createNewCard}
-          deleteColumnDetails={deleteColumnDetails}
-        />
+        <Box sx={{
+          flex: 1,
+          width: openSidePanel ? `calc(100% - ${DRAWER_WIDTH}px)` : '100%',
+          height: '100%',
+          p: '10px 0',
+          transition: (theme) => theme.transitions.create('width')
+        }}>
+          <ListColumns
+            columns={orderedColumns}
+            onColumnsUpdate={handleColumnsUpdate}
+            createNewColumn={createNewColumn}
+            createNewCard={createNewCard}
+            deleteColumnDetails={deleteColumnDetails}
+          />
+        </Box>
+
+        <IconButton
+          onClick={() => setOpenSidePanel(!openSidePanel)}
+          sx={{
+            position: 'fixed',
+            right: openSidePanel ? DRAWER_WIDTH : 0,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            bgcolor: 'background.paper',
+            borderRadius: '4px 0 0 4px',
+            '&:hover': { bgcolor: 'background.paper' },
+            transition: (theme) => theme.transitions.create('right'),
+            zIndex: (theme) => theme.zIndex.drawer + 1
+          }}
+        >
+          {openSidePanel ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+        </IconButton>
+
+        <Drawer
+          variant="persistent"
+          anchor="right"
+          open={openSidePanel}
+          sx={{
+            width: DRAWER_WIDTH,
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: DRAWER_WIDTH,
+              position: 'relative',
+              overflow: 'auto'
+            }
+          }}
+        >
+          <Box sx={{ p: 2 }}>
+            <FocusMode
+              tasks={allTasks}
+              onToggleComplete={handleTaskComplete}
+              enabled={focusModeEnabled}
+              onToggle={setFocusModeEnabled}
+            />
+
+            {!focusModeEnabled && (
+              <>
+                <BoardMembers
+                  members={board?.members || []}
+                  onAddMember={(member) => {/* Implement add member logic */}}
+                  onUpdateMember={(id, updates) => {/* Implement update member logic */}}
+                  onRemoveMember={(id) => {/* Implement remove member logic */}}
+                  currentUserIsAdmin={true}
+                />
+
+                <Divider sx={{ my: 2 }} />
+
+                <TaskTimeline tasks={allTasks} />
+
+                <Divider sx={{ my: 2 }} />
+
+                <PersonalNotes
+                  boardId={board?._id}
+                  userId="current-user-id" // Replace with actual user ID
+                />
+
+                <Divider sx={{ my: 2 }} />
+
+                <ActivityLog
+                  activities={[
+                    {
+                      id: 1,
+                      type: 'create',
+                      description: 'Created new task "Implementation"',
+                      user: 'John Doe',
+                      timestamp: new Date().toISOString()
+                    }
+                  ]}
+                />
+              </>
+            )}
+          </Box>
+        </Drawer>
 
         <DragOverlay dropAnimation={customdropAnimation}>
           {!activeDragItemType && null}
