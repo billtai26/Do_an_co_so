@@ -53,7 +53,7 @@ function BoardContent({
 
   // const pointerSensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
 
-  // Yêu cầu chuột di chuyển 10px thì mới kích hoạt event drag
+  // Yêu cầu chuột phải di chuyển 10px thì mới kích hoạt event, fix trường hợp click bị gọi event
   const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 10 } })
 
   // Nhấn giữ 250ms và dung sai của cảm ứng 500px thì mới kích hoạt event drag
