@@ -69,7 +69,7 @@ function Boards() {
     // setTotalBoards(100)
 
     // Mỗi khi cái url thay đổi ví dụ như chúng ta chuyển trang, thì cái location.search lấy từ hook useLocation của react-router-dom cũng thay đổi theo, đồng nghĩa hàm useEffect sẽ chạy lại và fetch lại API theo đúng page mới vì cái location.search đã nằm trong dependencies của useEffect
-    console.log(location.search)
+    // console.log(location.search)
 
     // Gọi API lấy danh sách boards ở đây...
     fetchBoardsAPI(location.search).then(res => {
