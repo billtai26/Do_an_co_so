@@ -47,8 +47,8 @@ function Notifications() {
 
   // Cập nhật trạng thái - status của một cái lời mời join board
   const updateBoardInvitation = (status, invitationId) => {
-    // console.log('status: ', status)
-    // console.log('invitationId: ', invitationId)
+    console.log('status: ', status)
+    console.log('invitationId: ', invitationId)
     dispatch(updateBoardInvitationAPI({ status, invitationId }))
       .then(res => {
         console.log(res)
