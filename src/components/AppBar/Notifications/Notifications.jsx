@@ -16,7 +16,8 @@ import NotInterestedIcon from '@mui/icons-material/NotInterested'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   fetchInvitationsAPI,
-  selectCurrentNotifications
+  selectCurrentNotifications,
+  updateBoardInvitationAPI
 } from '~/redux/notifications/notificationsSlice'
 
 const BOARD_INVITATION_STATUS = {
@@ -44,8 +45,14 @@ function Notifications() {
     dispatch(fetchInvitationsAPI())
   }, [dispatch])
 
-  const updateBoardInvitation = (status) => {
-    console.log('status: ', status)
+  // Cập nhật trạng thái - status của một cái lời mời join board
+  const updateBoardInvitation = (status, invitationId) => {
+    // console.log('status: ', status)
+    // console.log('invitationId: ', invitationId)
+    dispatch(updateBoardInvitationAPI({ status, invitationId }))
+      .then(res => {
+        console.log(res)
+      })
   }
 
   return (
@@ -91,49 +98,55 @@ function Notifications() {
                 {/* Nội dung của thông báo */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Box><GroupAddIcon fontSize="small" /></Box>
-                  <Box><strong>{notification.inviter}</strong> had invited you to join the board <strong>MERN Stack Advanced</strong></Box>
+                  <Box><strong>{notification.inviter?.displayName}</strong> had invited you to join the board <strong>{notification.board?.title}</strong></Box>
                 </Box>
 
                 {/* Khi Status của thông báo này là PENDING thì sẽ hiện 2 Button */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, justifyContent: 'flex-end' }}>
-                  <Button
-                    className="interceptor-loading"
-                    type="submit"
-                    variant="contained"
-                    color="success"
-                    size="small"
-                    onClick={() => updateBoardInvitation(BOARD_INVITATION_STATUS.ACCEPTED)}
-                  >
-                    Accept
-                  </Button>
-                  <Button
-                    className="interceptor-loading"
-                    type="submit"
-                    variant="contained"
-                    color="secondary"
-                    size="small"
-                    onClick={() => updateBoardInvitation(BOARD_INVITATION_STATUS.REJECTED)}
-                  >
-                    Reject
-                  </Button>
-                </Box>
+                {notification.boardInvitation.status === BOARD_INVITATION_STATUS.PENDING &&
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, justifyContent: 'flex-end' }}>
+                    <Button
+                      className="interceptor-loading"
+                      type="submit"
+                      variant="contained"
+                      color="success"
+                      size="small"
+                      onClick={() => updateBoardInvitation(BOARD_INVITATION_STATUS.ACCEPTED, notification._id)}
+                    >
+                      Accept
+                    </Button>
+                    <Button
+                      className="interceptor-loading"
+                      type="submit"
+                      variant="contained"
+                      color="secondary"
+                      size="small"
+                      onClick={() => updateBoardInvitation(BOARD_INVITATION_STATUS.REJECTED, notification._id)}
+                    >
+                      Reject
+                    </Button>
+                  </Box>
+                }
 
                 {/* Khi Status của thông báo này là ACCEPTED hoặc REJECTED thì sẽ hiện thông tin đó lên */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, justifyContent: 'flex-end' }}>
-                  <Chip icon={<DoneIcon />} label="Accepted" color="success" size="small" />
-                  <Chip icon={<NotInterestedIcon />} label="Rejected" size="small" />
+                  {notification.boardInvitation.status === BOARD_INVITATION_STATUS.ACCEPTED &&
+                    <Chip icon={<DoneIcon />} label="Accepted" color="success" size="small" />
+                  }
+                  {notification.boardInvitation.status === BOARD_INVITATION_STATUS.REJECTED &&
+                    <Chip icon={<NotInterestedIcon />} label="Rejected" size="small" />
+                  }
                 </Box>
 
                 {/* Thời gian của thông báo */}
                 <Box sx={{ textAlign: 'right' }}>
                   <Typography variant="span" sx={{ fontSize: '13px' }}>
-                    {moment().format('llll')}
+                    {moment(notification.createdAt).format('llll')}
                   </Typography>
                 </Box>
               </Box>
             </MenuItem>
             {/* Cái đường kẻ Divider sẽ không cho hiện nếu là phần tử cuối */}
-            {index !== ([...Array(6)].length - 1) && <Divider />}
+            {index !== (notifications?.length - 1) && <Divider />}
           </Box>
         )}
       </Menu>
