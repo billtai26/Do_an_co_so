@@ -29,8 +29,10 @@ function CardUserGroup({ cardMemberIds = [], onUpdateCardMembers }) {
    * Thành viên trong card sẽ phải là tập con của thành viên trong board
    * Vì thế dựa vào mảng board.FE_allUsers và card.memberIds rồi chúng ta tạo ra một mảng FE_CardMembers chứa đủ thông tin của User để hiển thị ra ngoài giao diện, bởi mặc định trong card chỉ lưu đám Id của User thôi (memberIds)
    */
-  const FE_CardMembers = board.FE_allUsers?.filter(user => cardMemberIds.includes(user._id))
-  console.log('FE_CardMembers: ', FE_CardMembers)
+  // const FE_CardMembers = board.FE_allUsers?.filter(user => cardMemberIds.includes(user._id))
+  const FE_CardMembers = cardMemberIds.map(id => board.FE_allUsers.find(u => u._id === id))
+  // console.log('FE_CardMembers_2: ', FE_CardMembers_2)
+  // console.log('FE_CardMembers: ', FE_CardMembers)
 
   const handleUpdateCardMembers = (user) => {
     // console.log(user)
@@ -39,7 +41,8 @@ function CardUserGroup({ cardMemberIds = [], onUpdateCardMembers }) {
       userId: user._id,
       action: cardMemberIds.includes(user._id) ? CARD_MEMBER_ACTIONS.REMOVE : CARD_MEMBER_ACTIONS.ADD
     }
-    console.log('incomingMemberInfo: ', incomingMemberInfo)
+    // console.log('incomingMemberInfo: ', incomingMemberInfo)
+    onUpdateCardMembers(incomingMemberInfo)
   }
 
   // Lưu ý ở đây chúng ta không dùng Component AvatarGroup của MUI bởi nó không hỗ trợ tốt trong việc chúng ta cần custom & trigger xử lý phần tử tính toán cuối, đơn giản là cứ dùng Box và CSS - Style đám Avatar cho chuẩn kết hợp tính toán một chút thôi.
