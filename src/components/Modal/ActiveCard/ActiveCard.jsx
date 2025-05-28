@@ -42,6 +42,7 @@ import { updateCardDetailsAPI } from '~/apis'
 import { updateCardInBoard } from '~/redux/activeBoard/activeBoardSlice'
 import { selectCurrentUser } from '~/redux/user/userSlice'
 import { CARD_MEMBER_ACTIONS } from '~/utils/constants'
+import Logout from '@mui/icons-material/Logout'
 
 import { styled } from '@mui/material/styles'
 const SidebarItem = styled(Box)(({ theme }) => ({
@@ -233,6 +234,18 @@ function ActiveCard() {
                 >
                   <PersonOutlineOutlinedIcon fontSize="small" />
                   Join
+                </SidebarItem>
+              }
+              {activeCard?.memberIds?.includes(currentUser._id) &&
+                <SidebarItem
+                  className="active"
+                  onClick={() => onUpdateCardMembers({
+                    userId: currentUser._id,
+                    action: CARD_MEMBER_ACTIONS.REMOVE
+                  })}
+                >
+                  <Logout fontSize="small" />
+                  Leave
                 </SidebarItem>
               }
 
