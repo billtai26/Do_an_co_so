@@ -26,7 +26,24 @@ export const mockData = {
             description: 'Markdown Syntax (sẽ ở khóa nâng cao nhé)',
             cover: 'https://trungquandev.com/wp-content/uploads/2022/07/fair-mern-stack-advanced-banner-trungquandev.jpg',
             memberIds: ['test-user-id-01'],
-            comments: ['test comment 01', 'test comment 02'],
+            comments: [
+              {
+                id: 'comment-01',
+                content: 'test comment 01',
+                userAvatar: 'https://example.com/avatar1.jpg',
+                userDisplayName: 'User 1',
+                commentedAt: new Date().toISOString(),
+                replies: []
+              },
+              {
+                id: 'comment-02',
+                content: 'test comment 02',
+                userAvatar: 'https://example.com/avatar2.jpg',
+                userDisplayName: 'User 2',
+                commentedAt: new Date().toISOString(),
+                replies: []
+              }
+            ],
             attachments: ['test attachment 01', 'test attachment 02', 'test attachment 03']
           },
           { _id: 'card-id-02', boardId: 'board-id-01', columnId: 'column-id-01', title: 'Title of card 02', description: null, cover: null, memberIds: [], comments: [], attachments: [] },

@@ -121,8 +121,18 @@ function ActiveCard() {
   }
 
   // Dùng async await ở đây để component con CardActivitySection chờ và nếu thành công thì mới clear thẻ input comment
-  const onAddCardComment = async (commentToAdd) => {
-    await callApiUpdateCard({ commentToAdd })
+  const onAddCardComment = (commentToAdd) => {
+    const currentComments = [...(activeCard?.comments || [])]
+
+    if (commentToAdd.parentId) {
+      // If this is a reply, add it to the comments array
+      currentComments.push(commentToAdd)
+    } else {
+      // If this is a new parent comment, add it with empty replies array
+      currentComments.push(commentToAdd)
+    }
+
+    return callApiUpdateCard({ comments: currentComments })
   }
 
   const onUpdateCardMembers = (incomingMemberInfo) => {
