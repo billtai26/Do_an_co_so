@@ -139,6 +139,36 @@ function ActiveCard() {
     callApiUpdateCard({ incomingMemberInfo })
   }
 
+  const onUploadAttachment = (event) => {
+    const file = event.target?.files[0]
+    const error = singleFileValidator(file)
+    if (error) {
+      toast.error(error)
+      return
+    }
+
+    let reqData = new FormData()
+    reqData.append('attachment', file)
+
+    // Thêm thông tin về file vào card
+    const newAttachment = {
+      name: file.name,
+      createdAt: new Date().toISOString(),
+      url: URL.createObjectURL(file) // Tạm thời dùng local URL, trong thực tế sẽ được thay bằng URL từ server
+    }
+
+    const currentAttachments = [...(activeCard?.attachments || [])]
+    currentAttachments.push(newAttachment)
+
+    toast.promise(
+      callApiUpdateCard({ attachments: currentAttachments }).finally(() => {
+        event.target.value = ''
+        URL.revokeObjectURL(newAttachment.url) // Giải phóng URL object khi không cần nữa
+      }),
+      { pending: 'Uploading attachment...' }
+    )
+  }
+
   return (
     <Modal
       disableScrollLock
@@ -215,6 +245,73 @@ function ActiveCard() {
 
             <Box sx={{ mb: 3 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                <AttachFileOutlinedIcon />
+                <Typography variant="span" sx={{ fontWeight: '600', fontSize: '20px' }}>Attachments</Typography>
+              </Box>
+
+              {/* Hiển thị danh sách attachments */}
+              {activeCard?.attachments?.length > 0 ? (
+                <Box sx={{ mt: 2 }}>
+                  {activeCard.attachments.map((attachment, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        p: 1,
+                        mb: 1,
+                        border: '1px solid',
+                        borderColor: 'divider',
+                        borderRadius: 1,
+                        '&:hover': {
+                          backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#2f3542' : '#f5f5f5'
+                        }
+                      }}
+                    >
+                      <AttachFileOutlinedIcon sx={{ mr: 1 }} />
+                      <Box sx={{ flexGrow: 1 }}>
+                        <Typography variant="body2" sx={{ fontWeight: 'medium', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          {attachment.name}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          Added {new Date(attachment.createdAt).toLocaleDateString()}
+                        </Typography>
+                      </Box>
+                      <a
+                        href={attachment?.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ textDecoration: 'none' }}
+                      >
+                        <Box
+                          component="span"
+                          sx={{
+                            px: 2,
+                            py: 0.5,
+                            borderRadius: 1,
+                            backgroundColor: 'primary.main',
+                            color: 'white',
+                            cursor: 'pointer',
+                            '&:hover': {
+                              backgroundColor: 'primary.dark'
+                            }
+                          }}
+                        >
+                          Download
+                        </Box>
+                      </a>
+                    </Box>
+                  ))}
+                </Box>
+              ) : (
+                <Typography sx={{ pl: '45px', fontSize: '14px', fontWeight: '500', color: '#b1b1b1', mt: 2 }}>
+                  No attachments yet!
+                </Typography>
+              )}
+            </Box>
+
+            <Box sx={{ mb: 3 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                 <DvrOutlinedIcon />
                 <Typography variant="span" sx={{ fontWeight: '600', fontSize: '20px' }}>Activity</Typography>
               </Box>
@@ -266,7 +363,14 @@ function ActiveCard() {
                 <VisuallyHiddenInput type="file" onChange={onUploadCardCover} />
               </SidebarItem>
 
-              <SidebarItem><AttachFileOutlinedIcon fontSize="small" />Attachment</SidebarItem>
+              <SidebarItem
+                className="active"
+                component="label"
+              >
+                <AttachFileOutlinedIcon fontSize="small" />
+                Attachment
+                <VisuallyHiddenInput type="file" onChange={onUploadAttachment} accept=".pdf" />
+              </SidebarItem>
               <SidebarItem><LocalOfferOutlinedIcon fontSize="small" />Labels</SidebarItem>
               <SidebarItem><TaskAltOutlinedIcon fontSize="small" />Checklist</SidebarItem>
               <SidebarItem><WatchLaterOutlinedIcon fontSize="small" />Dates</SidebarItem>
