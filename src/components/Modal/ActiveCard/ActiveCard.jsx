@@ -138,7 +138,6 @@ function ActiveCard() {
   const onUpdateCardMembers = (incomingMemberInfo) => {
     callApiUpdateCard({ incomingMemberInfo })
   }
-
   const onUploadAttachment = (event) => {
     const file = event.target?.files[0]
     const error = singleFileValidator(file)
@@ -150,22 +149,16 @@ function ActiveCard() {
     let reqData = new FormData()
     reqData.append('attachment', file)
 
-    // Thêm thông tin về file vào card
-    const newAttachment = {
-      name: file.name,
-      createdAt: new Date().toISOString(),
-      url: URL.createObjectURL(file) // Tạm thời dùng local URL, trong thực tế sẽ được thay bằng URL từ server
-    }
-
-    const currentAttachments = [...(activeCard?.attachments || [])]
-    currentAttachments.push(newAttachment)
-
     toast.promise(
-      callApiUpdateCard({ attachments: currentAttachments }).finally(() => {
+      callApiUpdateCard(reqData).then(updatedCard => {
+        // updatedCard sẽ chứa URL từ Cloudinary được trả về từ BE
         event.target.value = ''
-        URL.revokeObjectURL(newAttachment.url) // Giải phóng URL object khi không cần nữa
+        return updatedCard
       }),
-      { pending: 'Uploading attachment...' }
+      {
+        pending: 'Uploading attachment...',
+        success: 'File uploaded successfully!'
+      }
     )
   }
 
@@ -271,10 +264,10 @@ function ActiveCard() {
                       <AttachFileOutlinedIcon sx={{ mr: 1 }} />
                       <Box sx={{ flexGrow: 1 }}>
                         <Typography variant="body2" sx={{ fontWeight: 'medium', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          {attachment.name}
+                          {attachment?.fileName}
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
-                          Added {new Date(attachment.createdAt).toLocaleDateString()}
+                          Added {new Date(attachment?.uploadedAt).toLocaleDateString()}
                         </Typography>
                       </Box>
                       <a
