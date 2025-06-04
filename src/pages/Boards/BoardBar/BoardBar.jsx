@@ -57,7 +57,8 @@ function BoardBar({ board }) {
           icon={<AddToDriveIcon />}
           label="Add To Google Drive"
           clickable
-        />        <Chip
+        />
+        <Chip
           sx={MENU_STYLES}
           icon={<BoltIcon />}
           label="Automation"
