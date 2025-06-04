@@ -16,6 +16,7 @@ import Tooltip from '@mui/material/Tooltip'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import AddCardIcon from '@mui/icons-material/AddCard'
 import DragHandleIcon from '@mui/icons-material/DragHandle'
+import { TASK_STATUS } from '~/utils/enums'
 import ListCards from './ListCards/ListCards'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -68,11 +69,11 @@ function Column({ column }) {
       toast.error('Please enter Card Title!', { position: 'bottom-right' })
       return
     }
-
     // Tạo dữ liệu Card để gọi API
     const newCardData = {
       title: newCardTitle,
-      columnId: column._id
+      columnId: column._id,
+      status: TASK_STATUS.TODO // Set default status for new cards
     }
 
     // Gọi API tạo mới Card và làm lại dữ liệu State Board
