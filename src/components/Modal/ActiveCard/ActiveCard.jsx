@@ -6,6 +6,10 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import Grid from '@mui/material/Unstable_Grid2'
 import Stack from '@mui/material/Stack'
 import Divider from '@mui/material/Divider'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined'
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined'
 import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined'
@@ -43,6 +47,7 @@ import { updateCardInBoard } from '~/redux/activeBoard/activeBoardSlice'
 import { selectCurrentUser } from '~/redux/user/userSlice'
 import { CARD_MEMBER_ACTIONS } from '~/utils/constants'
 import Logout from '@mui/icons-material/Logout'
+import { TASK_STATUS } from '~/utils/enums'
 
 import { styled } from '@mui/material/styles'
 const SidebarItem = styled(Box)(({ theme }) => ({
@@ -162,6 +167,10 @@ function ActiveCard() {
     )
   }
 
+  const onUpdateCardStatus = (event) => {
+    callApiUpdateCard({ status: event.target.value })
+  }
+
   return (
     <Modal
       disableScrollLock
@@ -234,6 +243,27 @@ function ActiveCard() {
                 cardDescriptionProp={activeCard?.description}
                 handleUpdateCardDescription={onUpdateCardDescription}
               />
+            </Box>
+
+            <Box sx={{ mb: 3 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
+                <TaskAltOutlinedIcon />
+                <Typography variant="span" sx={{ fontWeight: '600', fontSize: '20px' }}>Status</Typography>
+              </Box>
+              <FormControl sx={{ minWidth: 200, ml: 4 }}>
+                <InputLabel id="task-status-label">Task Status</InputLabel>
+                <Select
+                  labelId="task-status-label"
+                  id="task-status"
+                  value={activeCard?.status || TASK_STATUS.TODO}
+                  label="Task Status"
+                  onChange={onUpdateCardStatus}
+                >
+                  <MenuItem value={TASK_STATUS.TODO}>{TASK_STATUS.TODO}</MenuItem>
+                  <MenuItem value={TASK_STATUS.IN_PROGRESS}>{TASK_STATUS.IN_PROGRESS}</MenuItem>
+                  <MenuItem value={TASK_STATUS.DONE}>{TASK_STATUS.DONE}</MenuItem>
+                </Select>
+              </FormControl>
             </Box>
 
             <Box sx={{ mb: 3 }}>
